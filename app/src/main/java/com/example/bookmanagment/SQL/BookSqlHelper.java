@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.example.bookmanagment.Schema.BookSchema;
+import com.example.bookmanagment.Schema.RoomSchema;
 
 public class BookSqlHelper extends SQLiteOpenHelper
 {
@@ -19,6 +20,7 @@ public class BookSqlHelper extends SQLiteOpenHelper
     public void onCreate(SQLiteDatabase sqLiteDatabase)
     {
         sqLiteDatabase.execSQL(BookSchema.createBookTable);
+        sqLiteDatabase.execSQL(RoomSchema.createTableRoom);
     }
 
     @Override

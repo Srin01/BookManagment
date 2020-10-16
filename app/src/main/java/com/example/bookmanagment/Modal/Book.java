@@ -4,14 +4,16 @@ public class Book
 {
     private int id;
     private String summary;
+    private String bookName;
     private int roomID;
     private int rowNumber;
     private int bookPositionInRow;
     private int shelfID;
 
-    public Book(int id, int roomID, int shelfID , int rowNumber, int bookPositionInRow, String summary)
+    public Book(int id, String bookName, int roomID, int shelfID , int rowNumber, int bookPositionInRow, String summary)
     {
         this.id = id;
+        this.bookName = bookName;
         this.shelfID = shelfID;
         this.roomID = roomID;
         this.rowNumber = rowNumber;
@@ -19,9 +21,10 @@ public class Book
         this.summary = summary;
     }
 
-    public Book()
+    public Book(String bookName, int rowNumber)
     {
-
+        this.bookName = bookName;
+        this.rowNumber = rowNumber;
     }
 
     public int getId()
@@ -39,28 +42,13 @@ public class Book
         return roomID;
     }
 
-    public void setRoomID(int roomID)
-    {
-        this.roomID = roomID;
-    }
-
     public int getShelfID() {
         return shelfID;
     }
 
-    public void setShelfID(int shelfID) {
-        this.shelfID = shelfID;
-    }
-
-
     public int getRowNumber()
     {
         return rowNumber;
-    }
-
-    public void setRowNumber(int rowNumber)
-    {
-        this.rowNumber = rowNumber;
     }
 
     public int getBookPositionInRow()
@@ -68,18 +56,12 @@ public class Book
         return bookPositionInRow;
     }
 
-    public void setBookPositionInRow(int bookPositionInRow)
-    {
-        this.bookPositionInRow = bookPositionInRow;
-    }
-
     public String getSummary()
     {
         return summary;
     }
 
-    public void setSummary(String summary)
-    {
-        this.summary = summary;
+    public String getBookName() {
+        return bookName;
     }
 }

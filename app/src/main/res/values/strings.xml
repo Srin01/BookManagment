@@ -8,4 +8,6 @@
     <string name="row_number">Row Number</string>
     <string name="position_of_the_book_in_the_row">Position of the book in the row</string>
     <string name="room_id_number">Room id number</string>
+    <string name="room_name">Room name</string>
+    <string name="bookname">BookName</string>
 </resources>

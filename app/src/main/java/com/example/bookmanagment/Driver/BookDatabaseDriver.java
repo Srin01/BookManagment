@@ -13,65 +13,69 @@ import java.util.ArrayList;
 
 public class BookDatabaseDriver
 {
-    private BookSqlHelper bookSqlHelper;
-    private Context context;
-    private SQLiteDatabase sqLiteDatabase;
+    SQLiteDatabase booksqLiteDatabase;
+    BookSqlHelper bookSqlHelper;
+    Context context;
+    ArrayList<Book> bookList;
+    int id ;
+    int roomID ;
+    int shelfID;
+    int rowNumber;
+    int bookPosition ;
+    String summary;
+    String bookName;
 
     public BookDatabaseDriver(Context context)
     {
         this.context = context;
         bookSqlHelper = new BookSqlHelper(context);
-        sqLiteDatabase = bookSqlHelper.getWritableDatabase();
+        booksqLiteDatabase = bookSqlHelper.getWritableDatabase();
     }
 
     public ArrayList<Book> getAllBooks()
     {
-        ArrayList<Book> bookList = new ArrayList<>();
+        bookList = new ArrayList<>();
 
-        String[] columns = {BookSchema._bookId, BookSchema._roomID, BookSchema._shelfID, BookSchema._rowNumber, BookSchema._bookPosition, BookSchema._summary};
-        Cursor cursor = sqLiteDatabase.query(BookSchema._tableName, columns, null, null, null, null, null);
+        String[] columns = {BookSchema._bookId, BookSchema._bookName ,BookSchema._roomID, BookSchema._shelfID, BookSchema._rowNumber, BookSchema._bookPosition, BookSchema._summary};
+        Cursor cursor = booksqLiteDatabase.query(BookSchema._tableName, columns, null, null, null, null, null);
 
         if(cursor != null && cursor.getCount() > 0)
         {
             cursor.moveToFirst();
             do {
-                int id = cursor.getInt(cursor.getColumnIndex(BookSchema._bookId));
-                int roomID = cursor.getInt(cursor.getColumnIndex(BookSchema._roomID));
-                int shelfID = cursor.getInt(cursor.getColumnIndex(BookSchema._shelfID));
-                int rowNumber = cursor.getInt(cursor.getColumnIndex(BookSchema._rowNumber));
-                int bookPosition = cursor.getInt(cursor.getColumnIndex(BookSchema._bookPosition));
-                String summary = cursor.getString(cursor.getColumnIndex(BookSchema._summary));
+                bindValues(cursor);
 
-                Book book = setBookDetails(id, roomID, shelfID, rowNumber, bookPosition, summary);
+                Book book = new Book(id, bookName ,roomID, shelfID, rowNumber, bookPosition, summary);
                 bookList.add(book);
 
             }while (cursor.moveToNext());
+            cursor.close();
         }
 
         return bookList;
     }
 
-    private Book setBookDetails(int id, int roomID, int shelfID, int rowNumber, int bookPosition, String summary)
+    private void bindValues(Cursor cursor)
     {
-        Book book = new Book();
-        book.setId(id);
-        book.setRoomID(roomID);
-        book.setShelfID(shelfID);
-        book.setRowNumber(rowNumber);
-        book.setBookPositionInRow(bookPosition);
-        book.setSummary(summary);
-
-        return book;
+        id = cursor.getInt(cursor.getColumnIndex(BookSchema._bookId));
+        bookName = cursor.getString(cursor.getColumnIndex(BookSchema._bookName));
+        roomID = cursor.getInt(cursor.getColumnIndex(BookSchema._roomID));
+        shelfID = cursor.getInt(cursor.getColumnIndex(BookSchema._shelfID));
+        rowNumber = cursor.getInt(cursor.getColumnIndex(BookSchema._rowNumber));
+        bookPosition = cursor.getInt(cursor.getColumnIndex(BookSchema._bookPosition));
+        summary = cursor.getString(cursor.getColumnIndex(BookSchema._summary));
     }
 
     public void insertNewBook(Book book)
     {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(BookSchema._roomID, book.getRoomID());
         contentValues.put(BookSchema._shelfID, book.getShelfID());
+        contentValues.put(BookSchema._bookName, book.getBookName());
         contentValues.put(BookSchema._rowNumber, book.getRowNumber());
         contentValues.put(BookSchema._bookPosition, book.getBookPositionInRow());
 
-        long id =sqLiteDatabase.insert(BookSchema._tableName, null, contentValues);
+        long id = booksqLiteDatabase.insert(BookSchema._tableName, null, contentValues);
     }
+
+
 }
