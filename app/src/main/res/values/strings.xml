@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Book Managment</string>
+    <string name="room_number">Room Number</string>
+    <string name="number_of_shelves">Number Of Shelves</string>
+    <string name="summary">Summary</string>
+    <string name="book_number">Book Number</string>
+    <string name="shelf_number">Shelf Number</string>
+    <string name="row_number">Row Number</string>
+    <string name="position_of_the_book_in_the_row">Position of the book in the row</string>
+    <string name="room_id_number">Room id number</string>
 </resources>
