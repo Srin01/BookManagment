@@ -12,13 +12,13 @@ public class BookSqlHelper extends SQLiteOpenHelper
 
     public BookSqlHelper(@Nullable Context context)
     {
-        super(context,BookSchema.Book._tableName, null, 1);
+        super(context,BookSchema.dataBaseName, null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase)
     {
-        sqLiteDatabase.execSQL("CREATE TABLE "+BookSchema.Book._tableName +" (" +BookSchema.Book._id+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +BookSchema.Book._roomID+" INTEGER, "+BookSchema.Book._shelfID +" INTEGER, " + BookSchema.Book._rowNumber+" INTEGER, " + BookSchema.Book._bookPosition+ " INTEGER, " + BookSchema.Book._summary+ " VARCHAR(300));");
+        sqLiteDatabase.execSQL(BookSchema.createBookTable);
     }
 
     @Override

@@ -19,8 +19,8 @@ public class BookDatabaseDriver
 
     public BookDatabaseDriver(Context context)
     {
-        bookSqlHelper = new BookSqlHelper(context);
         this.context = context;
+        bookSqlHelper = new BookSqlHelper(context);
         sqLiteDatabase = bookSqlHelper.getWritableDatabase();
     }
 
@@ -28,19 +28,19 @@ public class BookDatabaseDriver
     {
         ArrayList<Book> bookList = new ArrayList<>();
 
-        String[] columns = {BookSchema.Book._id, BookSchema.Book._roomID, BookSchema.Book._shelfID, BookSchema.Book._rowNumber, BookSchema.Book._bookPosition, BookSchema.Book._summary};
-        Cursor cursor = sqLiteDatabase.query(BookSchema.Book._tableName, columns, null, null, null, null, null);
+        String[] columns = {BookSchema._bookId, BookSchema._roomID, BookSchema._shelfID, BookSchema._rowNumber, BookSchema._bookPosition, BookSchema._summary};
+        Cursor cursor = sqLiteDatabase.query(BookSchema._tableName, columns, null, null, null, null, null);
 
         if(cursor != null && cursor.getCount() > 0)
         {
             cursor.moveToFirst();
             do {
-                int id = cursor.getInt(cursor.getColumnIndex(BookSchema.Book._id));
-                int roomID = cursor.getInt(cursor.getColumnIndex(BookSchema.Book._roomID));
-                int shelfID = cursor.getInt(cursor.getColumnIndex(BookSchema.Book._shelfID));
-                int rowNumber = cursor.getInt(cursor.getColumnIndex(BookSchema.Book._rowNumber));
-                int bookPosition = cursor.getInt(cursor.getColumnIndex(BookSchema.Book._bookPosition));
-                String summary = cursor.getString(cursor.getColumnIndex(BookSchema.Book._summary));
+                int id = cursor.getInt(cursor.getColumnIndex(BookSchema._bookId));
+                int roomID = cursor.getInt(cursor.getColumnIndex(BookSchema._roomID));
+                int shelfID = cursor.getInt(cursor.getColumnIndex(BookSchema._shelfID));
+                int rowNumber = cursor.getInt(cursor.getColumnIndex(BookSchema._rowNumber));
+                int bookPosition = cursor.getInt(cursor.getColumnIndex(BookSchema._bookPosition));
+                String summary = cursor.getString(cursor.getColumnIndex(BookSchema._summary));
 
                 Book book = setBookDetails(id, roomID, shelfID, rowNumber, bookPosition, summary);
                 bookList.add(book);
@@ -67,11 +67,11 @@ public class BookDatabaseDriver
     public void insertNewBook(Book book)
     {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(BookSchema.Book._roomID, book.getRoomID());
-        contentValues.put(BookSchema.Book._shelfID, book.getShelfID());
-        contentValues.put(BookSchema.Book._rowNumber, book.getRowNumber());
-        contentValues.put(BookSchema.Book._bookPosition, book.getBookPositionInRow());
+        contentValues.put(BookSchema._roomID, book.getRoomID());
+        contentValues.put(BookSchema._shelfID, book.getShelfID());
+        contentValues.put(BookSchema._rowNumber, book.getRowNumber());
+        contentValues.put(BookSchema._bookPosition, book.getBookPositionInRow());
 
-        long id =sqLiteDatabase.insert(BookSchema.Book._tableName, null, contentValues);
+        long id =sqLiteDatabase.insert(BookSchema._tableName, null, contentValues);
     }
 }
