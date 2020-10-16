@@ -55,6 +55,7 @@ public class ShelfBookActivity extends AppCompatActivity
         {
             if(resultCode == RESULT_OK)
             {
+                assert data != null;
                 String roomName = data.getStringExtra("bookName");
                 int numberOfShelves = data.getIntExtra("RowNumber", 1);
                 Book book = new Book(roomName, numberOfShelves);

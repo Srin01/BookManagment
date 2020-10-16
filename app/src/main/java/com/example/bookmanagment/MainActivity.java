@@ -28,9 +28,6 @@ public class MainActivity extends AppCompatActivity
     RoomDatabaseDriver roomDatabaseDriver;
     RoomAdapter roomAdapter;
     RoomExpert roomExpert;
-    BookAdapter bookAdapter;
-    BookExpert bookExpert;
-    RecyclerView booksViewRecycler;
     RecyclerView roomsViewRecycler;
 
     @Override
@@ -38,22 +35,16 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bookdatabaseDriver = new BookDatabaseDriver(this);
         roomDatabaseDriver = new RoomDatabaseDriver(this);
         roomExpert = new RoomExpert(roomDatabaseDriver);
         roomAdapter = new RoomAdapter(this, roomExpert);
-        bookExpert = new BookExpert(bookdatabaseDriver);
-        bookAdapter = new BookAdapter(this, bookExpert);
         bindViews();
     }
 
     private void bindViews()
     {
-        booksViewRecycler = findViewById(R.id.books_recyclerView);
         roomsViewRecycler = findViewById(R.id.shelves_recyclerView);
-        booksViewRecycler.setLayoutManager(new LinearLayoutManager(this));
         roomsViewRecycler.setLayoutManager(new LinearLayoutManager(this));
-        booksViewRecycler.setAdapter(bookAdapter);
         roomsViewRecycler.setAdapter(roomAdapter);
         printDetails();
     }
@@ -61,15 +52,8 @@ public class MainActivity extends AppCompatActivity
 
     public void printDetails()
     {
-        ArrayList<Book> books = bookdatabaseDriver.getAllBooks();
         ArrayList<Room> Rooms = roomDatabaseDriver.getAllRoomList();
-
-        System.out.println("Your database has " + books.size() + " books ");
-        for (int i = 0; i < books.size(); i++)
-        {
-            System.out.println(books.get(i).getId() + " " +books.get(i).getRowNumber());
-        }
-
+        
         System.out.println("Your database has " + Rooms.size() + " rooms ");
         for (int i = 0; i < Rooms.size(); i++)
         {
