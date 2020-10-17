@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +27,7 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
     BookDatabaseDriver bookDatabaseDriver;
     BookAdapter bookAdapter;
     BooksForRoomExpert booksForRoomExpert ;
+    Bitmap bitmap;
     String TAG = "myTag";
     int roomId;
     String roomName;
@@ -98,7 +100,8 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
                 assert data != null;
                 String bookNameValue = data.getStringExtra("bookName");
                 int rowNumberValue = data.getIntExtra("RowNumber", 1);
-                Book book = new Book(bookNameValue, rowNumberValue, roomId);
+                bitmap = data.getParcelableExtra("bookImage");
+                Book book = new Book(bookNameValue, rowNumberValue, roomId, bitmap);
                 Log.d(TAG, "onActivityResult: new book of room id " + roomId + " is added");
                 booksForRoomExpert.addNewBook(book);
                 bookAdapter.notifyDataSetChanged();

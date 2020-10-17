@@ -5,10 +5,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
     public static final String ROOM_NAME = "roomName";
     public static final String ROOM_ID = "roomID";
     public static final String SHELF_NUMBER = "shelfNumber";
+    public static final int OPEN_CAMERA_CODE = 1234;
     RoomDatabaseDriver roomDatabaseDriver;
     RoomAdapter roomAdapter;
     RoomExpert roomExpert;
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, OPEN_CAMERA_CODE);
         roomDatabaseDriver = new RoomDatabaseDriver(this);
         roomExpert = new RoomExpert(roomDatabaseDriver);
         roomAdapter = new RoomAdapter(this, roomExpert,this);

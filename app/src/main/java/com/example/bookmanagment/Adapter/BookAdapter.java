@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyBookViewHold
     TextView rowNumber;
     TextView positionInRow ;
     TextView bookName;
+    ImageView imageView;
     OnBookListerner onBookListerner;
 
     public BookAdapter(Context context, BooksForRoomExpert booksForRoomExpert, OnBookListerner onBookListerner)
@@ -58,6 +60,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyBookViewHold
         shelfId.setText(String.valueOf(booksForRoomExpert.getBookShelfNumber(position)));
         rowNumber.setText(String.valueOf(booksForRoomExpert.getRowNumber(position)));
         positionInRow.setText(String.valueOf(booksForRoomExpert.getBookPosition(position)));
+        imageView.setImageBitmap(booksForRoomExpert.getBitmapImage(position));
     }
 
     private void bindViews(View view)
@@ -69,6 +72,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyBookViewHold
         shelfId = view.findViewById(R.id.shelf_number);
         rowNumber = view.findViewById(R.id.row_number);
         positionInRow = view.findViewById(R.id.position_in_row);
+        imageView = view.findViewById(R.id.imageView_book);
     }
 
     @Override

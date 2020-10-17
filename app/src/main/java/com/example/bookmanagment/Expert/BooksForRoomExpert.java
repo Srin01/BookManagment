@@ -1,5 +1,6 @@
 package com.example.bookmanagment.Expert;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.example.bookmanagment.Driver.BookDatabaseDriver;
@@ -79,5 +80,9 @@ public class BooksForRoomExpert
             }
         }
         return null;
+    }
+    public Bitmap getBitmapImage(int position)
+    {
+        return bookList.get(position).getBitmapImage();
     }
 }

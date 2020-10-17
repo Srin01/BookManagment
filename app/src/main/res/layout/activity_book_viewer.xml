@@ -55,4 +55,23 @@
         app:layout_constraintTop_toBottomOf="@+id/textView_Location"
         app:layout_constraintVertical_bias="0.1"/>
 
+    <ImageView
+        android:id="@+id/imageViewSpecial"
+        app:layout_constraintEnd_toEndOf="@+id/textView_bookSummary"
+        app:layout_constraintStart_toStartOf="@+id/textView_bookSummary"
+        app:layout_constraintTop_toBottomOf="@+id/textView_bookSummary"
+        android:layout_marginTop="30dp"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickOpenPdf"
+        android:layout_marginTop="15dp"
+        android:text="Read Book"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewSpecial"
+        app:layout_constraintStart_toStartOf="@+id/imageViewSpecial"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewSpecial" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,18 +4,23 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import com.example.bookmanagment.Modal.Book;
 import com.example.bookmanagment.Modal.Room;
 import com.example.bookmanagment.SQL.BookSqlHelper;
 import com.example.bookmanagment.Schema.RoomSchema;
 
 import java.util.ArrayList;
 
+import static com.example.bookmanagment.BookViewerActivity.TAG;
+
 public class RoomDatabaseDriver
 {
      BookSqlHelper roomSqlHelper;
      Context context;
-     SQLiteDatabase sqLiteDatabase;
+     private SQLiteDatabase sqLiteDatabase;
+     private ArrayList<Room> roomList;
 
     public RoomDatabaseDriver(Context context)
     {
@@ -26,11 +31,16 @@ public class RoomDatabaseDriver
 
     public ArrayList<Room> getAllRoomList()
     {
-        ArrayList<Room> roomList = new ArrayList<>();
+        roomList = new ArrayList<>();
 
         String[] columns = {RoomSchema._roomId, RoomSchema._roomName,  RoomSchema._numberOfShelf};
         Cursor cursor = sqLiteDatabase.query(RoomSchema._tableName, columns, null, null, null, null, null);
 
+        return getListOfBooksFromDb(cursor);
+    }
+
+    private ArrayList<Room> getListOfBooksFromDb(Cursor cursor)
+    {
         if(cursor != null && cursor.getCount() > 0)
         {
             cursor.moveToFirst();
@@ -50,10 +60,16 @@ public class RoomDatabaseDriver
 
     public void insertNewRoom(Room room)
     {
+        ContentValues contentValues = insertContentValues(room);
+        long id = sqLiteDatabase.insert(RoomSchema._tableName, null, contentValues);
+        Log.d(TAG, "insertNewRoom: new Room of id " + id + " inserted into db");
+    }
+
+    private ContentValues insertContentValues(Room room)
+    {
         ContentValues contentValues = new ContentValues();
         contentValues.put(RoomSchema._roomName, room.getRoomName());
         contentValues.put(RoomSchema._numberOfShelf, room.getShelfNumber());
-
-        long id = sqLiteDatabase.insert(RoomSchema._tableName, null, contentValues);
+        return contentValues;
     }
 }

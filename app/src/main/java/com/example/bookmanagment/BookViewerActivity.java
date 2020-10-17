@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bookmanagment.Driver.BookDatabaseDriver;
@@ -19,6 +21,7 @@ public class BookViewerActivity extends AppCompatActivity
     TextView bookAuthor;
     TextView bookLocation;
     TextView Summary;
+    ImageView imageView;
     BooksForRoomExpert booksForRoomExpert;
     int room_id;
     int position;
@@ -40,6 +43,7 @@ public class BookViewerActivity extends AppCompatActivity
         bookAuthor = findViewById(R.id.textView_bookAuthor);
         bookLocation = findViewById(R.id.textView_Location);
         Summary = findViewById(R.id.textView_bookSummary);
+        imageView = findViewById(R.id.imageViewSpecial);
         bookDatabaseDriver = new BookDatabaseDriver(this);
         getDataFromShelfIntent();
         booksForRoomExpert = new BooksForRoomExpert(room_id,bookDatabaseDriver);
@@ -58,5 +62,9 @@ public class BookViewerActivity extends AppCompatActivity
     {
         bookName.setText(booksForRoomExpert.getBookOfSpecificId(id).getBookName());
         Summary.setText(booksForRoomExpert.getBookOfSpecificId(id).getSummary());
+        imageView.setImageBitmap(booksForRoomExpert.getBookOfSpecificId(id).getBitmapImage());
+    }
+
+    public void onClickOpenPdf(View view) {
     }
 }

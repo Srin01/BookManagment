@@ -1,6 +1,8 @@
 package com.example.bookmanagment.Modal;
 
-public class    Book
+import android.graphics.Bitmap;
+
+public class Book
 {
     private int id;
     private String summary;
@@ -9,6 +11,19 @@ public class    Book
     private int rowNumber;
     private int bookPositionInRow;
     private int shelfID;
+    private Bitmap bitmap;
+
+    public Book(int id, String bookName, int roomID, int shelfID , int rowNumber, int bookPositionInRow, String summary, Bitmap bitmap)
+    {
+        this.id = id;
+        this.bookName = bookName;
+        this.shelfID = shelfID;
+        this.roomID = roomID;
+        this.rowNumber = rowNumber;
+        this.bookPositionInRow = bookPositionInRow;
+        this.summary = summary;
+        this.bitmap = bitmap;
+    }
 
     public Book(int id, String bookName, int roomID, int shelfID , int rowNumber, int bookPositionInRow, String summary)
     {
@@ -21,11 +36,12 @@ public class    Book
         this.summary = summary;
     }
 
-    public Book(String bookName, int rowNumber, int roomID)
+    public Book(String bookName, int rowNumber, int roomID, Bitmap bitmap)
     {
         this.bookName = bookName;
         this.rowNumber = rowNumber;
         this.roomID = roomID;
+        this.bitmap = bitmap;
     }
 
     public int getId()
@@ -65,4 +81,6 @@ public class    Book
     public String getBookName() {
         return bookName;
     }
+
+    public Bitmap getBitmapImage(){ return bitmap; }
 }
