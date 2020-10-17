@@ -2,6 +2,7 @@ package com.example.bookmanagment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -65,6 +66,9 @@ public class BookViewerActivity extends AppCompatActivity
         imageView.setImageBitmap(booksForRoomExpert.getBookOfSpecificId(id).getBitmapImage());
     }
 
-    public void onClickOpenPdf(View view) {
+    public void onClickOpenPdf(View view)
+    {
+        Intent intent = new Intent(this, PDFActivity.class);
+        startActivity(intent);
     }
 }

@@ -72,6 +72,7 @@
         android:text="Read Book"
         app:layout_constraintEnd_toEndOf="@+id/imageViewSpecial"
         app:layout_constraintStart_toStartOf="@+id/imageViewSpecial"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewSpecial" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewSpecial"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

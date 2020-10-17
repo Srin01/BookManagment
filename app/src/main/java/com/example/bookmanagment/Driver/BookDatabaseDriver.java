@@ -47,8 +47,8 @@ public class BookDatabaseDriver
 
         String[] columns = {BookSchema._bookId, BookSchema._bookName ,BookSchema._roomID, BookSchema._shelfID, BookSchema._rowNumber, BookSchema._bookPosition, BookSchema._summary, BookSchema._bookImage};
         Cursor cursor = booksqLiteDatabase.query(BookSchema._tableName, columns, null, null, null, null, null);
-
-        return getListOfBooksFromDb(cursor);
+        int id1 = 1;
+        return getListOfBooksFromDb(cursor, id1);
     }
 
     public ArrayList<Book> getBooksOfSpecificRoom(int roomIDFromIntent)
@@ -58,8 +58,8 @@ public class BookDatabaseDriver
         Log.d(TAG, "getBooksOfSpecificRoom: retrieving books from id  " + roomIDFromIntent);
         String[] columns = {BookSchema._bookId, BookSchema._bookName ,BookSchema._roomID, BookSchema._shelfID, BookSchema._rowNumber, BookSchema._bookPosition, BookSchema._summary, BookSchema._bookImage};
         Cursor cursor = booksqLiteDatabase.rawQuery("SELECT * FROM book WHERE TRIM(room_id) = '"+roomIDFromIntent+"'", null);
-
-        return getListOfBooksFromDb(cursor);
+        int id1 = 0;
+        return getListOfBooksFromDb(cursor, id1);
 
     }
 
@@ -83,7 +83,7 @@ public class BookDatabaseDriver
         Log.d(TAG, "insertNewBook: " + id +" added to db");
     }
 
-    private ArrayList<Book> getListOfBooksFromDb(Cursor cursor)
+    private ArrayList<Book> getListOfBooksFromDb(Cursor cursor, int id1)
     {
         if (cursor != null && cursor.getCount() > 0 && cursor.moveToFirst())
         {
@@ -92,12 +92,18 @@ public class BookDatabaseDriver
                 Bitmap bitmap = BitmapFactory.decodeByteArray(image,0,image.length);
                 Log.d(TAG, "getAllBooks: got special book " +bookName + " from db ");
                 Book book = new Book(id, bookName, roomID, shelfID, rowNumber, bookPosition, summary,bitmap);
-                spclBookList.add(book);
+                if(id1 == 0) {
+                    spclBookList.add(book);
+                }
+                    bookList.add(book);
 
             }while (cursor.moveToNext());
             cursor.close();
         }
-        return spclBookList;
+        if(id1 == 0)
+            return spclBookList;
+        else
+            return bookList;
     }
 
     private ContentValues insertContentValues(Book book)

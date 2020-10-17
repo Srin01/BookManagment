@@ -12,7 +12,8 @@ import com.shockwave.pdfium.PdfDocument;
 
 import java.util.List;
 
-public class PDFActivity extends Activity implements OnPageChangeListener,OnLoadCompleteListener{
+public class PDFActivity extends Activity implements OnPageChangeListener,OnLoadCompleteListener
+{
     private static final String TAG = MainActivity.class.getSimpleName();
     public static final String SAMPLE_FILE = "doc.pdf";
     PDFView pdfView;
@@ -22,17 +23,17 @@ public class PDFActivity extends Activity implements OnPageChangeListener,OnLoad
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.pdf_view);
 
 
-        pdfView= (PDFView)findViewById(R.id.pdfView);
-        displayFromAsset(SAMPLE_FILE);
+        pdfView= findViewById(R.id.pdfView);
+        displayFromAsset();
     }
 
-    private void displayFromAsset(String assetFileName) {
-        pdfFileName = assetFileName;
+    private void displayFromAsset() {
+        pdfFileName = PDFActivity.SAMPLE_FILE;
 
-        pdfView.fromAsset(SAMPLE_FILE)
+        pdfView.fromAsset(pdfFileName)
                 .defaultPage(pageNumber)
                 .enableSwipe(true)
 
