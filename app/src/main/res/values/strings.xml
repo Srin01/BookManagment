@@ -10,4 +10,7 @@
     <string name="room_id_number">Room id number</string>
     <string name="room_name">Room name</string>
     <string name="bookname">BookName</string>
+    <string name="book_name">Book Name</string>
+    <string name="open">Navigation bar has been opened</string>
+    <string name="closed">Navigation bas was closed</string>
 </resources>

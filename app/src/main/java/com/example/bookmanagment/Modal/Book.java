@@ -1,6 +1,6 @@
 package com.example.bookmanagment.Modal;
 
-public class Book
+public class    Book
 {
     private int id;
     private String summary;

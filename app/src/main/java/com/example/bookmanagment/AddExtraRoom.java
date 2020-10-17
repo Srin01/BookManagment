@@ -33,8 +33,8 @@ public class AddExtraRoom extends AppCompatActivity
         String roomNameValue = roomName.getText().toString();
         int numberShelvesValue = Integer.parseInt(numberOfShelves.getText().toString());
         Intent intent = getIntent();
-        intent.putExtra("bookName", roomNameValue);
-        intent.putExtra("RowNumber", numberShelvesValue);
+        intent.putExtra("roomName", roomNameValue);
+        intent.putExtra("numberOfShelves", numberShelvesValue);
         setResult(RESULT_OK, intent);
         finish();
     }
