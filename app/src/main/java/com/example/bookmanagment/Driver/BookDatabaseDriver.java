@@ -26,7 +26,6 @@ public class BookDatabaseDriver
     ArrayList<Book> spclBookList;
     int id ;
     int roomID ;
-    int shelfID;
     int rowNumber;
     Bitmap bitmap;
     int bookPosition ;
@@ -45,21 +44,42 @@ public class BookDatabaseDriver
     {
         bookList = new ArrayList<>();
 
-        String[] columns = {BookSchema._bookId, BookSchema._bookName ,BookSchema._roomID, BookSchema._shelfID, BookSchema._rowNumber, BookSchema._bookPosition, BookSchema._summary, BookSchema._bookImage};
+        String[] columns = {BookSchema._bookId, BookSchema._bookName ,BookSchema._roomID,  BookSchema._rowNumber, BookSchema._bookPosition, BookSchema._summary, BookSchema._bookImage};
         Cursor cursor = booksqLiteDatabase.query(BookSchema._tableName, columns, null, null, null, null, null);
-        int id1 = 1;
-        return getListOfBooksFromDb(cursor, id1);
+        if (cursor != null && cursor.getCount() > 0 && cursor.moveToFirst() )
+        {
+            do {
+                bindValues(cursor);
+                bitmap = BitmapFactory.decodeByteArray(image,0,image.length);
+                Book book = new Book(id, bookName, roomID, rowNumber, bookPosition, summary, bitmap);
+                bookList.add(book);
+
+            }while (cursor.moveToNext());
+            cursor.close();
+        }
+            return bookList;
     }
 
-    public ArrayList<Book> getBooksOfSpecificRoom(int roomIDFromIntent)
+    public ArrayList<Book> getBooksOfSpecificRoomAndRow(int roomIDFromIntent, int rowId)
     {
+        String selection = BookSchema._roomID + " = ? " + " AND " + BookSchema._rowNumber + " = ?";
+        String[] selectionArgs = {String.valueOf(roomIDFromIntent), String.valueOf(rowId)};
         spclBookList = new ArrayList<>();
-        Log.d(TAG, "getBooksOfSpecificRoom: got room id " + roomIDFromIntent);
-        Log.d(TAG, "getBooksOfSpecificRoom: retrieving books from id  " + roomIDFromIntent);
-        String[] columns = {BookSchema._bookId, BookSchema._bookName ,BookSchema._roomID, BookSchema._shelfID, BookSchema._rowNumber, BookSchema._bookPosition, BookSchema._summary, BookSchema._bookImage};
-        Cursor cursor = booksqLiteDatabase.rawQuery("SELECT * FROM book WHERE TRIM(room_id) = '"+roomIDFromIntent+"'", null);
-        int id1 = 0;
-        return getListOfBooksFromDb(cursor, id1);
+        String[] columns = {BookSchema._bookId, BookSchema._bookName ,BookSchema._roomID,  BookSchema._rowNumber, BookSchema._bookPosition, BookSchema._summary, BookSchema._bookImage};
+        Cursor cursor = booksqLiteDatabase.query(BookSchema._tableName, columns, selection, selectionArgs,null,null, null);
+
+        if (cursor != null && cursor.getCount() > 0 && cursor.moveToFirst())
+        {
+            do {
+                bindValues(cursor);
+                bitmap = BitmapFactory.decodeByteArray(image,0,image.length);
+                Book book = new Book(id, bookName, roomID, rowNumber, bookPosition, summary, bitmap);
+                spclBookList.add(book);
+
+            }while (cursor.moveToNext());
+            cursor.close();
+        }
+            return spclBookList;
 
     }
 
@@ -68,7 +88,6 @@ public class BookDatabaseDriver
         id = cursor.getInt(cursor.getColumnIndex(BookSchema._bookId));
         bookName = cursor.getString(cursor.getColumnIndex(BookSchema._bookName));
         roomID = cursor.getInt(cursor.getColumnIndex(BookSchema._roomID));
-        shelfID = cursor.getInt(cursor.getColumnIndex(BookSchema._shelfID));
         rowNumber = cursor.getInt(cursor.getColumnIndex(BookSchema._rowNumber));
         bookPosition = cursor.getInt(cursor.getColumnIndex(BookSchema._bookPosition));
         summary = cursor.getString(cursor.getColumnIndex(BookSchema._summary));
@@ -78,34 +97,8 @@ public class BookDatabaseDriver
     public void insertNewBook(Book book)
     {
         ContentValues contentValues = insertContentValues(book);
-
         long id = booksqLiteDatabase.insert(BookSchema._tableName, null, contentValues);
         Log.d(TAG, "insertNewBook: " + id +" added to db");
-    }
-
-    private ArrayList<Book> getListOfBooksFromDb(Cursor cursor, int id1)
-    {
-        if (cursor != null && cursor.getCount() > 0 && cursor.moveToFirst())
-        {
-            do {
-                bindValues(cursor);
-                Bitmap bitmap = BitmapFactory.decodeByteArray(image,0,image.length);
-                Log.d(TAG, "getAllBooks: got special book " +bookName + " from db ");
-                Book book = new Book(id, bookName, roomID, shelfID, rowNumber, bookPosition, summary,bitmap);
-                if(id1 == 0) {
-                    spclBookList.add(book);
-                }
-                else {
-                    bookList.add(book);
-                }
-
-            }while (cursor.moveToNext());
-            cursor.close();
-        }
-        if(id1 == 0)
-            return spclBookList;
-        else
-            return bookList;
     }
 
     private ContentValues insertContentValues(Book book)
@@ -116,7 +109,6 @@ public class BookDatabaseDriver
         bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
         byte[] bytes = stream.toByteArray();
         contentValues.put(BookSchema._roomID, book.getRoomID());
-        contentValues.put(BookSchema._shelfID, book.getShelfID());
         contentValues.put(BookSchema._bookName, book.getBookName());
         contentValues.put(BookSchema._rowNumber, book.getRowNumber());
         contentValues.put(BookSchema._bookPosition, book.getBookPositionInRow());

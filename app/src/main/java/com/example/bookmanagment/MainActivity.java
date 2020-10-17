@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
     public static final String TAG = "myTag";
     public static final String ROOM_NAME = "roomName";
     public static final String ROOM_ID = "roomID";
-    public static final String SHELF_NUMBER = "shelfNumber";
     public static final int OPEN_CAMERA_CODE = 1234;
     RoomDatabaseDriver roomDatabaseDriver;
     RoomAdapter roomAdapter;
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
         System.out.println("Your database has " + Rooms.size() + " rooms ");
         for (int i = 0; i < Rooms.size(); i++)
         {
-            System.out.println(Rooms.get(i).getId() + " " +Rooms.get(i).getShelfNumber() + " " + Rooms.get(i).getRoomName());
+            System.out.println(Rooms.get(i).getId()  + " " + Rooms.get(i).getRoomName());
         }
     }
 
@@ -123,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
                 String roomName = data.getStringExtra("roomName");
                 int numberOfShelves = data.getIntExtra("numberOfShelves", 1);
                 Room room = new Room();
-                room.setShelfNumber(numberOfShelves);
                 room.setRoomName(roomName);
                 roomExpert.addNewRoom(room);
                 roomAdapter.notifyDataSetChanged();
@@ -139,7 +137,6 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
         Intent intent = new Intent(this, ShelfBookActivity.class);
         intent.putExtra(ROOM_NAME, roomExpert.getRoomName(position));
         intent.putExtra(ROOM_ID, roomExpert.getRoomID(position));
-        intent.putExtra(SHELF_NUMBER, roomExpert.getShelfNumber(position));
         startActivity(intent);
     }
 }

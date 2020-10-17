@@ -11,23 +11,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bookmanagment.Expert.BookExpertForRoomAndRow;
+import com.example.bookmanagment.Expert.BookExpert2;
 import com.example.bookmanagment.R;
 
 import static com.example.bookmanagment.MainActivity.TAG;
 
-public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyBookViewHolder>
+public class BookAdapter2 extends RecyclerView.Adapter<BookAdapter2.MyBookViewHolder>
 {
     private Context context;
-    private BookExpertForRoomAndRow bookExpertForRoomAndRow;
+    BookExpert2 bookExpert2;
     TextView bookName;
     ImageView imageView;
-    OnBookListerner onBookListerner;
+    OnBookListerner2 onBookListerner;
 
-    public BookAdapter(Context context, BookExpertForRoomAndRow bookExpertForRoomAndRow, OnBookListerner onBookListerner)
+    public BookAdapter2(Context context, BookExpert2 bookExpert2, OnBookListerner2 onBookListerner)
     {
         this.context = context;
-        this.bookExpertForRoomAndRow = bookExpertForRoomAndRow;
+        this.bookExpert2 = bookExpert2;
         this.onBookListerner = onBookListerner;
     }
 
@@ -46,9 +46,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyBookViewHold
     {
         View view = holder.view;
         bindViews(view);
-        Log.d(TAG, "onBindViewHolder: setting text as " + bookExpertForRoomAndRow.getBookName(position));
-        bookName.setText(bookExpertForRoomAndRow.getBookName(position));
-        imageView.setImageBitmap(bookExpertForRoomAndRow.getBitmapImage(position));
+        Log.d(TAG, "onBindViewHolder: setting text as " + bookExpert2.getBookName(position));
+        bookName.setText(bookExpert2.getBookName(position));
+        imageView.setImageBitmap(bookExpert2.getBitmapImage(position));
     }
 
     private void bindViews(View view)
@@ -60,15 +60,15 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyBookViewHold
     @Override
     public int getItemCount()
     {
-        Log.d(TAG, "getItemCount: there are " + bookExpertForRoomAndRow.getTotalBooks() + " no of books for adapter view");
-        return bookExpertForRoomAndRow.getTotalBooks();
+        Log.d(TAG, "getItemCount: there are " + bookExpert2.getTotalBooks() + " no of books for adapter view");
+        return bookExpert2.getTotalBooks();
     }
 
     public static class MyBookViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         View view;
-        OnBookListerner onBookListerner;
-        public MyBookViewHolder(@NonNull View itemView, OnBookListerner onBookListerner) {
+        OnBookListerner2 onBookListerner;
+        public MyBookViewHolder(@NonNull View itemView, OnBookListerner2 onBookListerner) {
             super(itemView);
             view = itemView;
             this.onBookListerner = onBookListerner;
@@ -78,12 +78,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyBookViewHold
 
         @Override
         public void onClick(View view) {
-            onBookListerner.onBookClick1(getAdapterPosition());
+            onBookListerner.onBookClick2(getAdapterPosition());
         }
     }
 
-    public interface OnBookListerner
+    public interface OnBookListerner2
     {
-        void onBookClick1(int position);
+        void onBookClick2(int position);
     }
 }
+

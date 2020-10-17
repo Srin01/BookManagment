@@ -33,7 +33,7 @@ public class RoomDatabaseDriver
     {
         roomList = new ArrayList<>();
 
-        String[] columns = {RoomSchema._roomId, RoomSchema._roomName,  RoomSchema._numberOfShelf};
+        String[] columns = {RoomSchema._roomId, RoomSchema._roomName};
         Cursor cursor = sqLiteDatabase.query(RoomSchema._tableName, columns, null, null, null, null, null);
 
         return getListOfBooksFromDb(cursor);
@@ -47,9 +47,8 @@ public class RoomDatabaseDriver
             do {
                 int id = cursor.getInt(cursor.getColumnIndex(RoomSchema._roomId));
                 String roomName = cursor.getString(cursor.getColumnIndex(RoomSchema._roomName));
-                int numberOfShelf = cursor.getInt(cursor.getColumnIndex(RoomSchema._numberOfShelf));
 
-                Room room = new Room(id,  numberOfShelf, roomName);
+                Room room = new Room(id, roomName);
                 roomList.add(room);
 
             }while (cursor.moveToNext());
@@ -69,7 +68,6 @@ public class RoomDatabaseDriver
     {
         ContentValues contentValues = new ContentValues();
         contentValues.put(RoomSchema._roomName, room.getRoomName());
-        contentValues.put(RoomSchema._numberOfShelf, room.getShelfNumber());
         return contentValues;
     }
 }

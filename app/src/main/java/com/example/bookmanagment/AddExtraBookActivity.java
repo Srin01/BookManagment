@@ -1,7 +1,6 @@
 package com.example.bookmanagment;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -13,13 +12,10 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.bookmanagment.Adapter.BookAdapter;
 
 import static com.example.bookmanagment.MainActivity.OPEN_CAMERA_CODE;
 
@@ -54,7 +50,7 @@ public class AddExtraBookActivity extends AppCompatActivity
         int rowNumberValue = Integer.parseInt(rowNumber.getText().toString());
         Intent intent = getIntent();
         intent.putExtra("bookName", bookNameValue);
-        intent.putExtra("rowNumber", rowNumberValue);
+        intent.putExtra("RowNumber", rowNumberValue);
         intent.putExtra("bookImage", bitmap);
         setResult(RESULT_OK, intent);
         finish();

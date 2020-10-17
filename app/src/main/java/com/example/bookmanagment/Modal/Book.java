@@ -10,14 +10,12 @@ public class Book
     private int roomID;
     private int rowNumber;
     private int bookPositionInRow;
-    private int shelfID;
     private Bitmap bitmap;
 
-    public Book(int id, String bookName, int roomID, int shelfID , int rowNumber, int bookPositionInRow, String summary, Bitmap bitmap)
+    public Book(int id, String bookName, int roomID,  int rowNumber, int bookPositionInRow, String summary, Bitmap bitmap)
     {
         this.id = id;
         this.bookName = bookName;
-        this.shelfID = shelfID;
         this.roomID = roomID;
         this.rowNumber = rowNumber;
         this.bookPositionInRow = bookPositionInRow;
@@ -25,11 +23,10 @@ public class Book
         this.bitmap = bitmap;
     }
 
-    public Book(int id, String bookName, int roomID, int shelfID , int rowNumber, int bookPositionInRow, String summary)
+    public Book(int id, String bookName, int roomID, int rowNumber, int bookPositionInRow, String summary)
     {
         this.id = id;
         this.bookName = bookName;
-        this.shelfID = shelfID;
         this.roomID = roomID;
         this.rowNumber = rowNumber;
         this.bookPositionInRow = bookPositionInRow;
@@ -57,10 +54,6 @@ public class Book
     public int getRoomID()
     {
         return roomID;
-    }
-
-    public int getShelfID() {
-        return shelfID;
     }
 
     public int getRowNumber()

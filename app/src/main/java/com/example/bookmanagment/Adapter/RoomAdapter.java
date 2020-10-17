@@ -47,11 +47,9 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         View view = holder.itemView;
         final TextView roomId = view.findViewById(R.id.room_id);
         final TextView roomName = view.findViewById(R.id.room_name);
-        final TextView numberOfShelves = view.findViewById(R.id.number_of_shelves);
 
         roomId.setText(roomExpert.getRoomID(position) + "");
         roomName.setText(roomExpert.getRoomName(position));
-        numberOfShelves.setText(roomExpert.getShelfNumber(position) + "");
     }
 
     @Override

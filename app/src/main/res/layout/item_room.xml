@@ -29,13 +29,5 @@
         android:textStyle="bold"
         />
 
-    <TextView
-        android:id="@+id/number_of_shelves"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/number_of_shelves"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        />
 
 </LinearLayout>

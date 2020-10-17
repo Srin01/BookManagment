@@ -4,10 +4,9 @@ public class Room
 {
     private int id;
 
-    public Room(int id, int numberOfShelf, String roomName)
+    public Room(int id, String roomName)
     {
         this.id = id;
-        NumberOfShelf = numberOfShelf;
         this.roomName = roomName;
     }
     public Room()
@@ -26,16 +25,6 @@ public class Room
     public void setId(int id)
     {
         this.id = id;
-    }
-
-    public int getShelfNumber()
-    {
-        return NumberOfShelf;
-    }
-
-    public void setShelfNumber(int shelf)
-    {
-        NumberOfShelf = shelf;
     }
 
     public String getRoomName() {

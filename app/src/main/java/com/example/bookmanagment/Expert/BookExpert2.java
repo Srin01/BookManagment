@@ -10,16 +10,17 @@ import java.util.ArrayList;
 
 import static com.example.bookmanagment.MainActivity.TAG;
 
-public class BooksForRoomExpert
+public class BookExpert2
 {
     BookDatabaseDriver bookDatabaseDriver;
     ArrayList<Book> bookList ;
     int roomId;
-    public BooksForRoomExpert(int roomID, BookDatabaseDriver bookdatabaseDriver)
+
+    public BookExpert2(int roomID, BookDatabaseDriver bookdatabaseDriver)
     {
         this.bookDatabaseDriver = bookdatabaseDriver;
         this.roomId = roomID;
-        bookList = bookdatabaseDriver.getBooksOfSpecificRoom(roomID);
+        bookList = bookdatabaseDriver.getBooksOfSpecificRoomAndRow(roomID, 2);
         Log.d(TAG, "BooksForRoomExpert: bookslist of special room number obtained");
     }
 
@@ -31,11 +32,6 @@ public class BooksForRoomExpert
     public int getBookRoomId(int bookPosition)
     {
         return bookList.get(bookPosition).getRoomID();
-    }
-
-    public int getBookShelfNumber(int bookPosition)
-    {
-        return bookList.get(bookPosition).getShelfID();
     }
 
     public int getRowNumber(int bookPosition)
@@ -56,7 +52,7 @@ public class BooksForRoomExpert
     public int getTotalBooks()
     {
 
-        return bookDatabaseDriver.getBooksOfSpecificRoom(roomId).size();
+        return bookDatabaseDriver.getBooksOfSpecificRoomAndRow(roomId, 2).size();
     }
 
     public void addNewBook(Book book)
@@ -86,3 +82,4 @@ public class BooksForRoomExpert
         return bookList.get(position).getBitmapImage();
     }
 }
+

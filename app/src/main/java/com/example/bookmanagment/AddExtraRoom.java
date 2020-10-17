@@ -11,7 +11,6 @@ import android.widget.TextView;
 public class AddExtraRoom extends AppCompatActivity
 {
     TextView roomName;
-    TextView numberOfShelves;
     Button submitButton;
 
     @Override
@@ -24,17 +23,14 @@ public class AddExtraRoom extends AppCompatActivity
     private void bindViews()
     {
         roomName = findViewById(R.id.textinputRoomName);
-        numberOfShelves = findViewById(R.id.textinputNumberOfShelves);
         submitButton = findViewById(R.id.submitButton);
     }
 
     public void onClickAddExtraRoom(View view)
     {
         String roomNameValue = roomName.getText().toString();
-        int numberShelvesValue = Integer.parseInt(numberOfShelves.getText().toString());
         Intent intent = getIntent();
         intent.putExtra("roomName", roomNameValue);
-        intent.putExtra("numberOfShelves", numberShelvesValue);
         setResult(RESULT_OK, intent);
         finish();
     }

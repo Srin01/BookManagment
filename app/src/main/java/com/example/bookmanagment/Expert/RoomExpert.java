@@ -21,11 +21,6 @@ public class RoomExpert
         return roomArrayList.get(bookPosition).getId();
     }
 
-    public int getShelfNumber(int bookPosition)
-    {
-        return roomArrayList.get(bookPosition).getShelfNumber();
-    }
-
     public String getRoomName(int bookPosition)
     {
         return roomArrayList.get(bookPosition).getRoomName();
@@ -40,6 +35,5 @@ public class RoomExpert
     public int getTotalRooms()
     {
         return roomArrayList.size();
-
     }
 }

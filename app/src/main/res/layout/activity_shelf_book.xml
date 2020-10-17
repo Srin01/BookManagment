@@ -17,15 +17,35 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/books_recyclerView"
-        android:layout_width="408dp"
-        android:layout_height="668dp"
-
-        android:layout_marginTop="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/books_recyclerView_row1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="horizontal"
+        android:layout_marginTop="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:background="@drawable/background_shelf"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/books_recyclerView_row2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/books_recyclerView_row1"
+        android:background="@drawable/background_shelf"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/books_recyclerView_row3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/books_recyclerView_row2"
+        android:background="@drawable/background_shelf"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"

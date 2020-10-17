@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bookmanagment.Driver.BookDatabaseDriver;
-import com.example.bookmanagment.Expert.BooksForRoomExpert;
+import com.example.bookmanagment.Expert.BookExpert2;
+import com.example.bookmanagment.Expert.BookExpert3;
+import com.example.bookmanagment.Expert.BookExpertForRoomAndRow;
 
 import static com.example.bookmanagment.ShelfBookActivity.BOOK_ID;
 import static com.example.bookmanagment.ShelfBookActivity.BOOK_POS;
@@ -18,17 +20,21 @@ import static com.example.bookmanagment.ShelfBookActivity.BOOK_ROOM_ID;
 
 public class BookViewerActivity extends AppCompatActivity
 {
+    public static final String ROW_ID = "row_Id";
     TextView bookName;
     TextView bookAuthor;
     TextView bookLocation;
     TextView Summary;
     ImageView imageView;
-    BooksForRoomExpert booksForRoomExpert;
+    BookExpertForRoomAndRow bookExpertForRoomAndRow;
+    BookExpert2 bookExpert2;
+    BookExpert3 bookExpert3;
     int room_id;
     int position;
     public final static String TAG = "myTag";
     BookDatabaseDriver bookDatabaseDriver;
     private int id;
+    private int row_Id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +53,9 @@ public class BookViewerActivity extends AppCompatActivity
         imageView = findViewById(R.id.imageViewSpecial);
         bookDatabaseDriver = new BookDatabaseDriver(this);
         getDataFromShelfIntent();
-        booksForRoomExpert = new BooksForRoomExpert(room_id,bookDatabaseDriver);
+        bookExpertForRoomAndRow = new BookExpertForRoomAndRow(room_id,bookDatabaseDriver);
+        bookExpert2 = new BookExpert2(room_id, bookDatabaseDriver);
+        bookExpert3 = new BookExpert3(room_id, bookDatabaseDriver);
     }
 
     private void getDataFromShelfIntent()
@@ -57,13 +65,28 @@ public class BookViewerActivity extends AppCompatActivity
         position = getIntent().getIntExtra(BOOK_ID,0);
         room_id = getIntent().getIntExtra(BOOK_ROOM_ID,0);
         id = getIntent().getIntExtra(BOOK_ID, 0);
+        row_Id = getIntent().getIntExtra(ROW_ID, 0);
     }
 
     private void SetViews()
     {
-        bookName.setText(booksForRoomExpert.getBookOfSpecificId(id).getBookName());
-        Summary.setText(booksForRoomExpert.getBookOfSpecificId(id).getSummary());
-        imageView.setImageBitmap(booksForRoomExpert.getBookOfSpecificId(id).getBitmapImage());
+        if(row_Id == 1) {
+            bookName.setText(bookExpertForRoomAndRow.getBookOfSpecificId(id).getBookName());
+            Summary.setText(bookExpertForRoomAndRow.getBookOfSpecificId(id).getSummary());
+            imageView.setImageBitmap(bookExpertForRoomAndRow.getBookOfSpecificId(id).getBitmapImage());
+        }
+        else if(row_Id == 2)
+        {
+            bookName.setText(bookExpert2.getBookOfSpecificId(id).getBookName());
+            Summary.setText(bookExpert2.getBookOfSpecificId(id).getSummary());
+            imageView.setImageBitmap(bookExpert2.getBookOfSpecificId(id).getBitmapImage());
+        }
+        else
+        {
+            bookName.setText(bookExpert3.getBookOfSpecificId(id).getBookName());
+            Summary.setText(bookExpert3.getBookOfSpecificId(id).getSummary());
+            imageView.setImageBitmap(bookExpert3.getBookOfSpecificId(id).getBitmapImage());
+        }
     }
 
     public void onClickOpenPdf(View view)

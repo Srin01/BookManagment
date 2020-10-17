@@ -1,26 +1,27 @@
 package com.example.bookmanagment.Expert;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.example.bookmanagment.Driver.BookDatabaseDriver;
 import com.example.bookmanagment.Modal.Book;
 
 import java.util.ArrayList;
 
-public class BookExpertForSearch
+import static com.example.bookmanagment.MainActivity.TAG;
+
+public class BookExpertForRoomAndRow
 {
     BookDatabaseDriver bookDatabaseDriver;
     ArrayList<Book> bookList ;
+    int roomId;
 
-    public BookExpertForSearch(BookDatabaseDriver bookdatabaseDriver)
+    public BookExpertForRoomAndRow(int roomID, BookDatabaseDriver bookdatabaseDriver)
     {
         this.bookDatabaseDriver = bookdatabaseDriver;
-        bookList = bookdatabaseDriver.getAllBooks();
-    }
-
-    public ArrayList<Book> getAllBooks()
-    {
-        return bookList;
+        this.roomId = roomID;
+        bookList = bookdatabaseDriver.getBooksOfSpecificRoomAndRow(roomID, 1);
+        Log.d(TAG, "BooksForRoomExpert: bookslist of special room number obtained");
     }
 
     public int getBookId(int bookPosition)
@@ -50,12 +51,34 @@ public class BookExpertForSearch
 
     public int getTotalBooks()
     {
-        return bookList.size();
+
+        return bookDatabaseDriver.getBooksOfSpecificRoomAndRow(roomId, 1).size();
     }
 
     public void addNewBook(Book book)
     {
         bookDatabaseDriver.insertNewBook(book);
         bookList.add(book);
+        Log.d(TAG, "addNewBook: Book " + book.getBookName() +"Added to db");
+    }
+
+    public String getBookName(int position)
+    {
+        return bookList.get(position).getBookName();
+    }
+    public Book getBookOfSpecificId(int id)
+    {
+        for (int i = 0; i < bookList.size(); i++)
+        {
+            if(bookList.get(i).getId() == id)
+            {
+                return bookList.get(i);
+            }
+        }
+        return null;
+    }
+    public Bitmap getBitmapImage(int position)
+    {
+        return bookList.get(position).getBitmapImage();
     }
 }
