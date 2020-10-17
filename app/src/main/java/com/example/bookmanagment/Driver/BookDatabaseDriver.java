@@ -95,7 +95,9 @@ public class BookDatabaseDriver
                 if(id1 == 0) {
                     spclBookList.add(book);
                 }
+                else {
                     bookList.add(book);
+                }
 
             }while (cursor.moveToNext());
             cursor.close();

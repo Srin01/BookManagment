@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.bookmanagment">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -12,13 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ShelfRoomActivity"></activity>
         <activity android:name=".AddExtraBookActivity" />
         <activity android:name=".ShelfBookActivity" />
         <activity android:name=".AddExtraRoom" />
-        <activity android:name=".SearchActivity"
+        <activity
+            android:name=".SearchActivity"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".BookViewerActivity"/>
-        <activity android:name=".PDFActivity"/>
+        <activity android:name=".BookViewerActivity" />
+        <activity android:name=".PDFActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
