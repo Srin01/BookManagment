@@ -15,6 +15,7 @@
         <activity android:name=".AddExtraRoom" />
         <activity android:name=".SearchActivity"
             tools:ignore="DuplicateActivity" />
+        <activity android:name=".BookViewerActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

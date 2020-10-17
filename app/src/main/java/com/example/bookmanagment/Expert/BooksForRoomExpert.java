@@ -1,18 +1,25 @@
 package com.example.bookmanagment.Expert;
 
+import android.util.Log;
+
 import com.example.bookmanagment.Driver.BookDatabaseDriver;
 import com.example.bookmanagment.Modal.Book;
 
 import java.util.ArrayList;
 
+import static com.example.bookmanagment.MainActivity.TAG;
+
 public class BooksForRoomExpert
 {
     BookDatabaseDriver bookDatabaseDriver;
     ArrayList<Book> bookList ;
+    int roomId;
     public BooksForRoomExpert(int roomID, BookDatabaseDriver bookdatabaseDriver)
     {
         this.bookDatabaseDriver = bookdatabaseDriver;
+        this.roomId = roomID;
         bookList = bookdatabaseDriver.getBooksOfSpecificRoom(roomID);
+        Log.d(TAG, "BooksForRoomExpert: bookslist of special room number obtained");
     }
 
     public int getBookId(int bookPosition)
@@ -47,12 +54,30 @@ public class BooksForRoomExpert
 
     public int getTotalBooks()
     {
-        return bookList.size();
+
+        return bookDatabaseDriver.getBooksOfSpecificRoom(roomId).size();
     }
 
     public void addNewBook(Book book)
     {
         bookDatabaseDriver.insertNewBook(book);
         bookList.add(book);
+        Log.d(TAG, "addNewBook: Book " + book.getBookName() +"Added to db");
+    }
+
+    public String getBookName(int position)
+    {
+        return bookList.get(position).getBookName();
+    }
+    public Book getBookOfSpecificId(int id)
+    {
+        for (int i = 0; i < bookList.size(); i++)
+        {
+            if(bookList.get(i).getId() == id)
+            {
+                return bookList.get(i);
+            }
+        }
+        return null;
     }
 }

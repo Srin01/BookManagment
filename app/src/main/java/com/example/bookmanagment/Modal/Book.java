@@ -21,10 +21,11 @@ public class    Book
         this.summary = summary;
     }
 
-    public Book(String bookName, int rowNumber)
+    public Book(String bookName, int rowNumber, int roomID)
     {
         this.bookName = bookName;
         this.rowNumber = rowNumber;
+        this.roomID = roomID;
     }
 
     public int getId()
