@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookmanagment.Adapter.SearchAdapter;
 import com.example.bookmanagment.Driver.BookDatabaseDriver;
+import com.example.bookmanagment.Expert.BookExpertForSearch;
 import com.example.bookmanagment.Modal.Book;
 
 import java.util.ArrayList;
@@ -21,9 +22,10 @@ public class SearchActivity extends AppCompatActivity
     SearchView searchView;
     ListView listView;
     ArrayAdapter<String> adapter;
-    BookDatabaseDriver bookDatabaseDriver = new BookDatabaseDriver(this);
+    BookExpertForSearch bookExpertForSearch;
+    BookDatabaseDriver bookDatabaseDriver;
 
-    ArrayList<Book> books = bookDatabaseDriver.getAllBooks();
+    ArrayList<Book> books ;
     ArrayList<String> bookNames = new ArrayList<>();
 
     @Override
@@ -38,7 +40,7 @@ public class SearchActivity extends AppCompatActivity
             bookNames.add(books.get(i).getBookName());
         }
 
-        adapter = new ArrayAdapter<>(this, R.layout.search_list_item, bookNames);
+        adapter = new ArrayAdapter<>(this, R.layout.search_list_item,R.id.book_name, bookNames);
         listView.setAdapter(adapter);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -60,5 +62,8 @@ public class SearchActivity extends AppCompatActivity
     {
         searchView = findViewById(R.id.searchView);
         listView = findViewById(R.id.list_view);
+        bookDatabaseDriver = new BookDatabaseDriver(this);
+        bookExpertForSearch = new BookExpertForSearch(bookDatabaseDriver);
+        books = bookExpertForSearch.getAllBooks();
     }
 }

@@ -9,14 +9,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bookmanagment.Expert.BookExpert;
+import com.example.bookmanagment.Expert.BooksForRoomExpert;
 import com.example.bookmanagment.R;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyBookViewHolder>
 {
-
     private Context context;
-    private BookExpert bookExpert;
+    private BooksForRoomExpert bookExpert;
     TextView bookNumber ;
     TextView Summary ;
     TextView roomId ;
@@ -24,11 +23,12 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyBookViewHold
     TextView rowNumber;
     TextView positionInRow ;
 
-    public BookAdapter(Context context, BookExpert bookExpert)
+    public BookAdapter(Context context, BooksForRoomExpert bookExpert)
     {
         this.context = context;
         this.bookExpert = bookExpert;
     }
+
 
     @NonNull
     @Override
@@ -57,7 +57,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyBookViewHold
     {
         bookNumber = view.findViewById(R.id.book_number);
         Summary = view.findViewById(R.id.summary);
-        roomId = view.findViewById(R.id.room_id);
+        roomId = view.findViewById(R.id.room_number);
         shelfId = view.findViewById(R.id.shelf_number);
         rowNumber = view.findViewById(R.id.row_number);
         positionInRow = view.findViewById(R.id.position_in_row);

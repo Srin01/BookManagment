@@ -6,7 +6,8 @@
     android:paddingStart="25dp"
     android:paddingEnd="25dp"
     android:gravity="center_vertical"
-    android:layout_marginBottom="25dp">
+    android:layout_marginBottom="25dp"
+    >
 
     <TextView
         android:id="@+id/room_id"

@@ -5,14 +5,19 @@ import com.example.bookmanagment.Modal.Book;
 
 import java.util.ArrayList;
 
-public class BookExpert
+public class BookExpertForSearch
 {
     BookDatabaseDriver bookDatabaseDriver;
     ArrayList<Book> bookList ;
-    public BookExpert(BookDatabaseDriver bookdatabaseDriver)
+    public BookExpertForSearch(BookDatabaseDriver bookdatabaseDriver)
     {
         this.bookDatabaseDriver = bookdatabaseDriver;
         bookList = bookdatabaseDriver.getAllBooks();
+    }
+
+    public ArrayList<Book> getAllBooks()
+    {
+        return bookList;
     }
 
     public int getBookId(int bookPosition)

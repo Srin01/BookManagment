@@ -55,6 +55,25 @@ public class BookDatabaseDriver
         return bookList;
     }
 
+    public ArrayList<Book> getBooksOfSpecificRoom(int roomIDFromIntent)
+    {
+        bookList = new ArrayList<>();
+        String[] columns = {BookSchema._bookId, BookSchema._bookName ,BookSchema._roomID, BookSchema._shelfID, BookSchema._rowNumber, BookSchema._bookPosition, BookSchema._summary};
+        Cursor cursor = booksqLiteDatabase.query(BookSchema._tableName, columns, BookSchema._roomID + "=?" , new String[] {String.valueOf(roomIDFromIntent)}, null, null, null);
+        if (cursor != null && cursor.getCount() > 0)
+        {
+            do {
+                bindValues(cursor);
+
+                Book book = new Book(id, bookName, roomID, shelfID, rowNumber, bookPosition, summary);
+                bookList.add(book);
+
+            }while (cursor.moveToNext());
+            cursor.close();
+        }
+        return bookList;
+    }
+
     private void bindValues(Cursor cursor)
     {
         id = cursor.getInt(cursor.getColumnIndex(BookSchema._bookId));

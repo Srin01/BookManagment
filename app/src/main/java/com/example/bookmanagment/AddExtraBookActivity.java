@@ -34,11 +34,11 @@ public class AddExtraBookActivity extends AppCompatActivity
 
     public void onClickAddExtraBook(View view)
     {
-        String roomNameValue = bookName.getText().toString();
-        int numberShelvesValue = Integer.parseInt(rowNumber.getText().toString());
+        String bookNameValue = bookName.getText().toString();
+        int rowNumberValue = Integer.parseInt(rowNumber.getText().toString());
         Intent intent = getIntent();
-        intent.putExtra("bookName", roomNameValue);
-        intent.putExtra("rowNumber", numberShelvesValue);
+        intent.putExtra("bookName", bookNameValue);
+        intent.putExtra("rowNumber", rowNumberValue);
         setResult(RESULT_OK, intent);
         finish();
     }
