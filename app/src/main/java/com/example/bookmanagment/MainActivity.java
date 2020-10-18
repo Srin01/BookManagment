@@ -16,12 +16,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.bookmanagment.Adapter.RoomAdapter;
 import com.example.bookmanagment.Driver.RoomDatabaseDriver;
 import com.example.bookmanagment.Expert.RoomExpert;
 import com.example.bookmanagment.Modal.Room;
 import com.google.android.material.navigation.NavigationView;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
 
@@ -37,10 +40,15 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
     RecyclerView roomsViewRecycler;
     Toolbar toolbar;
     DrawerLayout drawerLayout;
+    CarouselView carouselView;
+
+    int[] sampleImages = {R.drawable.shelf_messy, R.drawable.organised_shelf, R.drawable.shelf3, R.drawable.online_reading};
+    String[] texts = {"From this", "To this", "We make your life easier", "Stay nerdy stay foolish"};
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, OPEN_CAMERA_CODE);
@@ -53,11 +61,23 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
         setUpListeners();
     }
 
+    ImageListener imageListener = new ImageListener()
+    {
+        @Override
+        public void setImageForPosition(int position, ImageView imageView) {
+            imageView.setImageResource(sampleImages[position]);
+        }
+    };
+
+
     private void bindViews()
     {
         roomsViewRecycler = findViewById(R.id.shelves_recyclerView);
-        roomsViewRecycler.setLayoutManager(new LinearLayoutManager(this));
+        roomsViewRecycler.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         roomsViewRecycler.setAdapter(roomAdapter);
+        carouselView = findViewById(R.id.carouselView);
+        carouselView.setPageCount(sampleImages.length);
+        carouselView.setImageListener(imageListener);
         printDetails();
     }
     private void setUpListeners()

@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 public class Book
 {
     private int id;
-    private String summary;
+    private String bookAuthor;
     private String bookName;
     private int roomID;
     private int rowNumber;
@@ -19,7 +19,7 @@ public class Book
         this.roomID = roomID;
         this.rowNumber = rowNumber;
         this.bookPositionInRow = bookPositionInRow;
-        this.summary = summary;
+        this.bookAuthor = summary;
         this.bitmap = bitmap;
     }
 
@@ -30,7 +30,7 @@ public class Book
         this.roomID = roomID;
         this.rowNumber = rowNumber;
         this.bookPositionInRow = bookPositionInRow;
-        this.summary = summary;
+        this.bookAuthor = summary;
     }
 
     public Book(String bookName, int rowNumber, int roomID, Bitmap bitmap)
@@ -66,9 +66,9 @@ public class Book
         return bookPositionInRow;
     }
 
-    public String getSummary()
+    public String getBookAuthor()
     {
-        return summary;
+        return bookAuthor;
     }
 
     public String getBookName() {

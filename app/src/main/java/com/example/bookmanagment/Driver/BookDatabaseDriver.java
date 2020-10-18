@@ -29,7 +29,7 @@ public class BookDatabaseDriver
     int rowNumber;
     Bitmap bitmap;
     int bookPosition ;
-    String summary;
+    String bookAuthor;
     String bookName;
     byte[] image;
 
@@ -44,14 +44,14 @@ public class BookDatabaseDriver
     {
         bookList = new ArrayList<>();
 
-        String[] columns = {BookSchema._bookId, BookSchema._bookName ,BookSchema._roomID,  BookSchema._rowNumber, BookSchema._bookPosition, BookSchema._summary, BookSchema._bookImage};
+        String[] columns = {BookSchema._bookId, BookSchema._bookName ,BookSchema._roomID,  BookSchema._rowNumber, BookSchema._bookPosition, BookSchema._bookAuthor, BookSchema._bookImage};
         Cursor cursor = booksqLiteDatabase.query(BookSchema._tableName, columns, null, null, null, null, null);
         if (cursor != null && cursor.getCount() > 0 && cursor.moveToFirst() )
         {
             do {
                 bindValues(cursor);
                 bitmap = BitmapFactory.decodeByteArray(image,0,image.length);
-                Book book = new Book(id, bookName, roomID, rowNumber, bookPosition, summary, bitmap);
+                Book book = new Book(id, bookName, roomID, rowNumber, bookPosition, bookAuthor, bitmap);
                 bookList.add(book);
 
             }while (cursor.moveToNext());
@@ -65,7 +65,7 @@ public class BookDatabaseDriver
         String selection = BookSchema._roomID + " = ? " + " AND " + BookSchema._rowNumber + " = ?";
         String[] selectionArgs = {String.valueOf(roomIDFromIntent), String.valueOf(rowId)};
         spclBookList = new ArrayList<>();
-        String[] columns = {BookSchema._bookId, BookSchema._bookName ,BookSchema._roomID,  BookSchema._rowNumber, BookSchema._bookPosition, BookSchema._summary, BookSchema._bookImage};
+        String[] columns = {BookSchema._bookId, BookSchema._bookName ,BookSchema._roomID,  BookSchema._rowNumber, BookSchema._bookPosition, BookSchema._bookAuthor, BookSchema._bookImage};
         Cursor cursor = booksqLiteDatabase.query(BookSchema._tableName, columns, selection, selectionArgs,null,null, null);
 
         if (cursor != null && cursor.getCount() > 0 && cursor.moveToFirst())
@@ -73,7 +73,7 @@ public class BookDatabaseDriver
             do {
                 bindValues(cursor);
                 bitmap = BitmapFactory.decodeByteArray(image,0,image.length);
-                Book book = new Book(id, bookName, roomID, rowNumber, bookPosition, summary, bitmap);
+                Book book = new Book(id, bookName, roomID, rowNumber, bookPosition, bookAuthor, bitmap);
                 spclBookList.add(book);
 
             }while (cursor.moveToNext());
@@ -90,7 +90,7 @@ public class BookDatabaseDriver
         roomID = cursor.getInt(cursor.getColumnIndex(BookSchema._roomID));
         rowNumber = cursor.getInt(cursor.getColumnIndex(BookSchema._rowNumber));
         bookPosition = cursor.getInt(cursor.getColumnIndex(BookSchema._bookPosition));
-        summary = cursor.getString(cursor.getColumnIndex(BookSchema._summary));
+        bookAuthor = cursor.getString(cursor.getColumnIndex(BookSchema._bookAuthor));
         image = cursor.getBlob(cursor.getColumnIndex(BookSchema._bookImage));
     }
 

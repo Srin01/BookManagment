@@ -1,5 +1,7 @@
 package com.example.bookmanagment.Expert;
 
+import android.graphics.Bitmap;
+
 import com.example.bookmanagment.Driver.BookDatabaseDriver;
 import com.example.bookmanagment.Driver.RoomDatabaseDriver;
 import com.example.bookmanagment.Modal.Room;
@@ -52,5 +54,10 @@ public class RoomExpert
     public int getSpecifcId(String roomName)
     {
         return roomDatabaseDriver.getIdRoomSpeificname(roomName);
+    }
+
+    public Bitmap getBitmapImageRoom(int position)
+    {
+        return roomArrayList.get(position).getBitmapImage();
     }
 }

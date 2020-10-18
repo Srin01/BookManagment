@@ -24,7 +24,6 @@ public class BookViewerActivity extends AppCompatActivity
     TextView bookName;
     TextView bookAuthor;
     TextView bookLocation;
-    TextView Summary;
     ImageView imageView;
     BookExpertForRoomAndRow bookExpertForRoomAndRow;
     BookExpert2 bookExpert2;
@@ -49,7 +48,7 @@ public class BookViewerActivity extends AppCompatActivity
         bookName = findViewById(R.id.textView_bookName);
         bookAuthor = findViewById(R.id.textView_bookAuthor);
         bookLocation = findViewById(R.id.textView_Location);
-        Summary = findViewById(R.id.textView_bookSummary);
+        bookAuthor = findViewById(R.id.textView_bookSummary);
         imageView = findViewById(R.id.imageViewSpecial);
         bookDatabaseDriver = new BookDatabaseDriver(this);
         getDataFromShelfIntent();
@@ -72,19 +71,19 @@ public class BookViewerActivity extends AppCompatActivity
     {
         if(row_Id == 1) {
             bookName.setText(bookExpertForRoomAndRow.getBookOfSpecificId(id).getBookName());
-            Summary.setText(bookExpertForRoomAndRow.getBookOfSpecificId(id).getSummary());
+            bookAuthor.setText(bookExpertForRoomAndRow.getBookOfSpecificId(id).getBookAuthor());
             imageView.setImageBitmap(bookExpertForRoomAndRow.getBookOfSpecificId(id).getBitmapImage());
         }
         else if(row_Id == 2)
         {
             bookName.setText(bookExpert2.getBookOfSpecificId(id).getBookName());
-            Summary.setText(bookExpert2.getBookOfSpecificId(id).getSummary());
+            bookAuthor.setText(bookExpert2.getBookOfSpecificId(id).getBookAuthor());
             imageView.setImageBitmap(bookExpert2.getBookOfSpecificId(id).getBitmapImage());
         }
         else
         {
             bookName.setText(bookExpert3.getBookOfSpecificId(id).getBookName());
-            Summary.setText(bookExpert3.getBookOfSpecificId(id).getSummary());
+            bookAuthor.setText(bookExpert3.getBookOfSpecificId(id).getBookAuthor());
             imageView.setImageBitmap(bookExpert3.getBookOfSpecificId(id).getBitmapImage());
         }
     }

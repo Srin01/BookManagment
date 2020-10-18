@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     public RoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.item_room, parent, false);
+        View view = layoutInflater.inflate(R.layout.item_shelf, parent, false);
         return new RoomViewHolder(view, onRoomListerner);
     }
 
@@ -45,10 +46,15 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     public void onBindViewHolder(@NonNull RoomViewHolder holder, final int position)
     {
         View view = holder.itemView;
-        final TextView roomId = view.findViewById(R.id.room_id);
-        final TextView roomName = view.findViewById(R.id.room_name);
-
-        roomId.setText(roomExpert.getRoomID(position) + "");
+        final TextView roomName = view.findViewById(R.id.room_name1);
+        ImageView roomImage = view.findViewById(R.id.room_image1);
+        if(roomExpert.getBitmapImageRoom(position) == null) {
+            roomImage.setImageResource(R.drawable.living_room);
+        }
+        else
+        {
+            roomImage.setImageBitmap(roomExpert.getBitmapImageRoom(position));
+        }
         roomName.setText(roomExpert.getRoomName(position));
     }
 

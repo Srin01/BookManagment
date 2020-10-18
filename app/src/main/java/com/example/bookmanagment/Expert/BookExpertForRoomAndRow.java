@@ -44,9 +44,9 @@ public class BookExpertForRoomAndRow
         return bookList.get(bookPosition).getBookPositionInRow();
     }
 
-    public String getSummary(int bookPosition)
+    public String getAuthor(int bookPosition)
     {
-        return bookList.get(bookPosition).getSummary();
+        return bookList.get(bookPosition).getBookAuthor();
     }
 
     public int getTotalBooks()
