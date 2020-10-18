@@ -63,6 +63,7 @@ public class LoginPage extends AppCompatActivity
 
         if(!userExpert.ifUserExistForSpecifiRoom(usernameValue, roomId))
         {
+            Toast.makeText(this, "user name = " + usernameValue, Toast.LENGTH_SHORT).show();
             Toast.makeText(this, "User Name Invalid", Toast.LENGTH_SHORT).show();
         }
         else

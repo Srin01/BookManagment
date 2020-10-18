@@ -71,18 +71,31 @@ public class UserExpert
     public boolean ifUserExist(String userName)
     {
         User user = getUserOfSpecificName(userName);
-        return user.getUserName().equals(userName);
+        if(user != null) {
+            return user.getUserName().equals(userName);
+        }
+        else {
+            return false;
+        }
     }
     public boolean validatePassword(String usernameGiven, String passwordGiven)
     {
         User user = getUserOfSpecificName(usernameGiven);
+        if(user != null) {
         String password = user.getUserPassword();
-        return password.equals(passwordGiven);
+            return password.equals(passwordGiven);
+        }
+        else {
+            return false;
+        }
     }
 
     public boolean ifUserExistForSpecifiRoom(String usernameValue, int roomId)
     {
         User user = userDataBaseDriver.getUserFromSpecifRoom(roomId);
-        return user.getUserName().equals(usernameValue);
+        if(user != null) {
+            return user.getUserName().equals(usernameValue);
+        }
+        return false;
     }
 }
