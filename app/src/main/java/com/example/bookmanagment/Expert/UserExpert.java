@@ -57,11 +57,11 @@ public class UserExpert
     {
         return userList.get(userPosition).getUserName();
     }
-    public User getUserOfSpecificId(int id)
+    public User getUserOfSpecificName(String userName)
     {
         for (int i = 0; i < userList.size(); i++)
         {
-            if(userList.get(i).getId() == id)
+            if(userList.get(i).equals(userName))
             {
                 return userList.get(i);
             }
@@ -70,13 +70,19 @@ public class UserExpert
     }
     public boolean ifUserExist(String userName)
     {
-        for (int i = 0; i <userList.size() ; i++)
-        {
-            if(userName.equals(userList.get(i).getUserName()))
-            {
-                return true;
-            }
-        }
-        return false;
+        User user = getUserOfSpecificName(userName);
+        return user.getUserName().equals(userName);
+    }
+    public boolean validatePassword(String usernameGiven, String passwordGiven)
+    {
+        User user = getUserOfSpecificName(usernameGiven);
+        String password = user.getUserPassword();
+        return password.equals(passwordGiven);
+    }
+
+    public boolean ifUserExistForSpecifiRoom(String usernameValue, int roomId)
+    {
+        User user = userDataBaseDriver.getUserFromSpecifRoom(roomId);
+        return user.getUserName().equals(usernameValue);
     }
 }

@@ -7,6 +7,7 @@ public class User
     private String userPassword;
     private String question;
     private String answer;
+    private int roomId;
 
     public User(String userName, String userPassword)
     {
@@ -18,13 +19,14 @@ public class User
         return id;
     }
 
-    public User(int id, String userName, String userPassword, String question, String answer)
+    public User(int id, String userName, String userPassword, String question, String answer, int roomId)
     {
         this.id = id;
         this.userName = userName;
         this.userPassword = userPassword;
         this.question = question;
         this.answer = answer;
+        this.roomId = roomId;
     }
 
     public User( String userName, String userPassword, String question, String answer)
