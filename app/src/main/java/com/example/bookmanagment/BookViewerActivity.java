@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bookmanagment.Driver.BookDatabaseDriver;
 import com.example.bookmanagment.Expert.BookExpert2;
@@ -68,22 +69,27 @@ public class BookViewerActivity extends AppCompatActivity
 
     private void SetViews()
     {
-        if(row_Id == 1) {
-            bookName.setText(bookExpertForRoomAndRow.getBookOfSpecificId(id).getBookName());
-            bookAuthor.setText(bookExpertForRoomAndRow.getBookOfSpecificId(id).getBookAuthor());
-            imageView.setImageBitmap(bookExpertForRoomAndRow.getBookOfSpecificId(id).getBitmapImage());
+        try {
+            if (row_Id == 1) {
+                bookName.setText(bookExpertForRoomAndRow.getBookOfSpecificId(id).getBookName());
+                bookAuthor.setText(bookExpertForRoomAndRow.getBookOfSpecificId(id).getBookAuthor());
+                imageView.setImageBitmap(bookExpertForRoomAndRow.getBookOfSpecificId(id).getBitmapImage());
+            } else if (row_Id == 2) {
+                bookName.setText(bookExpert2.getBookOfSpecificId(id).getBookName());
+                bookAuthor.setText(bookExpert2.getBookOfSpecificId(id).getBookAuthor());
+                imageView.setImageBitmap(bookExpert2.getBookOfSpecificId(id).getBitmapImage());
+            } else {
+                bookName.setText(bookExpert3.getBookOfSpecificId(id).getBookName());
+                bookAuthor.setText(bookExpert3.getBookOfSpecificId(id).getBookAuthor());
+                imageView.setImageBitmap(bookExpert3.getBookOfSpecificId(id).getBitmapImage());
+            }
         }
-        else if(row_Id == 2)
+        catch (Exception e)
         {
-            bookName.setText(bookExpert2.getBookOfSpecificId(id).getBookName());
-            bookAuthor.setText(bookExpert2.getBookOfSpecificId(id).getBookAuthor());
-            imageView.setImageBitmap(bookExpert2.getBookOfSpecificId(id).getBitmapImage());
-        }
-        else
-        {
-            bookName.setText(bookExpert3.getBookOfSpecificId(id).getBookName());
-            bookAuthor.setText(bookExpert3.getBookOfSpecificId(id).getBookAuthor());
-            imageView.setImageBitmap(bookExpert3.getBookOfSpecificId(id).getBitmapImage());
+            e.printStackTrace();
+            Intent intent = new Intent(this, MainActivity.class);
+            Toast.makeText(this, "Login Again", Toast.LENGTH_SHORT).show();
+            startActivity(intent);
         }
     }
 
