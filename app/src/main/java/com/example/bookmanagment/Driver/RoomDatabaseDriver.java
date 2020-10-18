@@ -31,8 +31,28 @@ public class RoomDatabaseDriver
         this.context = context;
         roomSqlHelper = new BookSqlHelper(context);
         sqLiteDatabase = roomSqlHelper.getWritableDatabase();
+        createLivingRoom();
     }
 
+    private void createLivingRoom()
+    {
+        if(!isLivingRoomExist()) {
+            ContentValues contentValues = insertContentValues(new Room("Living Room"));
+            long id = sqLiteDatabase.insert(RoomSchema._tableName, null, contentValues);
+            Log.d(TAG, "createLivingRoom: living room is created ");
+        }
+    }
+
+    public boolean isLivingRoomExist()
+    {
+        String selection = RoomSchema._roomName + " = ?";
+        String[] selectionArgs = {"Living Room"};
+
+        String[] columns = {RoomSchema._roomId};
+        Cursor cursor = sqLiteDatabase.query(RoomSchema._tableName, columns, selection, selectionArgs,null,null, null);
+        return cursor != null && cursor.getCount() > 0 && cursor.moveToFirst();
+    }
+    
     public ArrayList<Room> getAllRoomList()
     {
         roomList = new ArrayList<>();
@@ -73,8 +93,7 @@ public class RoomDatabaseDriver
         {
             cursor.moveToFirst();
             do {
-                int id = cursor.getInt(cursor.getColumnIndex(RoomSchema._roomId));
-                return id;
+                return cursor.getInt(cursor.getColumnIndex(RoomSchema._roomId));
 
             }while (cursor.moveToNext());
         }

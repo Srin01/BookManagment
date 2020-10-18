@@ -17,6 +17,18 @@
         android:background="@color/colorPrimary"
         />
 
+    <TextView
+        android:id="@+id/textView_signin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/righteous"
+        android:text="Add a new room"
+        android:textSize="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_RoomName"
@@ -25,7 +37,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/textView_signin"
         app:layout_constraintVertical_bias="0.1">
 
         <com.google.android.material.textfield.TextInputEditText

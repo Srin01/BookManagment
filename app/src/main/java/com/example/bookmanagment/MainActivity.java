@@ -157,10 +157,18 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
     @Override
     public void onRoomClick(int position)
     {
-        Log.d(TAG, "onRoomClick: " + roomExpert.getRoomName(position));
-        Intent intent = new Intent(this, LoginPage.class);
-        intent.putExtra(ROOM_NAME, roomExpert.getRoomName(position));
-        intent.putExtra(ROOM_ID, roomExpert.getRoomID(position));
-        startActivity(intent);
+        if(position != 0) {
+            Log.d(TAG, "onRoomClick: " + roomExpert.getRoomName(position));
+            Intent intent = new Intent(this, LoginPage.class);
+            intent.putExtra(ROOM_NAME, roomExpert.getRoomName(position));
+            intent.putExtra(ROOM_ID, roomExpert.getRoomID(position));
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(this, ShelfBookActivity.class);
+            intent.putExtra(ROOM_NAME,roomExpert.getRoomName(position));
+            intent.putExtra(ROOM_ID,roomExpert.getRoomID(position));
+            startActivity(intent);
+        }
     }
 }
