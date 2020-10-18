@@ -7,6 +7,8 @@ import android.widget.Spinner;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.bookmanagment.Driver.UserDataBaseDriver;
+import com.example.bookmanagment.Expert.UserExpert;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class SignUpPage extends AppCompatActivity
@@ -16,6 +18,8 @@ public class SignUpPage extends AppCompatActivity
     private TextInputEditText confirmedPassword;
     private TextInputEditText securityAnswer;
     private Spinner securityQuestion;
+    UserExpert userExpert;
+    UserDataBaseDriver userDataBaseDriver;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -30,6 +34,7 @@ public class SignUpPage extends AppCompatActivity
         securityQuestion.setAdapter(adapter);
     }
 
+
     private void bindViews()
     {
         username = findViewById(R.id.textInputUsername);
@@ -37,5 +42,7 @@ public class SignUpPage extends AppCompatActivity
         confirmedPassword = findViewById(R.id.textInputConfirmPassword);
         securityAnswer = findViewById(R.id.textInputSecurityAnswer);
         securityQuestion = findViewById(R.id.security_question);
+        userDataBaseDriver = new UserDataBaseDriver(this);
+        userExpert = new UserExpert(userDataBaseDriver);
     }
 }

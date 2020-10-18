@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 
 import com.example.bookmanagment.Schema.BookSchema;
 import com.example.bookmanagment.Schema.RoomSchema;
+import com.example.bookmanagment.Schema.UserSchema;
 
 public class BookSqlHelper extends SQLiteOpenHelper
 {
@@ -21,10 +22,16 @@ public class BookSqlHelper extends SQLiteOpenHelper
     {
         sqLiteDatabase.execSQL(BookSchema.createBookTable);
         sqLiteDatabase.execSQL(RoomSchema.createTableRoom);
+        sqLiteDatabase.execSQL(UserSchema._createTableUser);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1)
+    {
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + BookSchema._tableName);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + RoomSchema._tableName);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + UserSchema._tableName);
 
+        onCreate(sqLiteDatabase);
     }
 }
