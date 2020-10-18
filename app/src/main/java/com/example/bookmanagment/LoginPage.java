@@ -77,7 +77,7 @@ public class LoginPage extends AppCompatActivity
         //code to check if the entered username and password are matching the correct credentials or not
         Log.d(TAG, "onClickLogin: got " + usernameValue + roomId);
 
-            if(userExpert.validatePassword(usernameValue, userPasswordValue))
+            if(userExpert.validatePassword(usernameValue, userPasswordValue, roomId))
             {
                 Toast.makeText(this, "Login Successful welcome back  " + usernameValue, Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onClickLogin: login successful");

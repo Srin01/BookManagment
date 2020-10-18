@@ -78,11 +78,13 @@ public class UserExpert
             return false;
         }
     }
-    public boolean validatePassword(String usernameGiven, String passwordGiven)
+    public boolean validatePassword(String usernameGiven, String passwordGiven, int roomId)
     {
         User user = getUserOfSpecificName(usernameGiven);
-        if(user != null) {
-        String password = user.getUserPassword();
+        User user2 = getUserOfSpecificRoom(roomId);
+        if(user2 != null) {
+        String password = user2.getUserPassword();
+        String userName = user2.getUserName();
             Log.d(TAG, "validatePassword: got pwd " + password);
             return password.equals(passwordGiven);
         }
@@ -90,6 +92,17 @@ public class UserExpert
             Log.d(TAG, "validatePassword: got pwd null" );
             return false;
         }
+    }
+
+    private User getUserOfSpecificRoom(int roomId)
+    {for (int i = 0; i < userList.size(); i++)
+    {
+        if(userList.get(i).getRoomId() == roomId)
+        {
+            return userList.get(i);
+        }
+    }
+        return null;
     }
 
     public boolean ifUserExistForSpecifiRoom(String usernameValue, int roomId) {
