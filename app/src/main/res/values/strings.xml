@@ -13,4 +13,6 @@
     <string name="book_name">Book Name</string>
     <string name="open">Navigation bar has been opened</string>
     <string name="closed">Navigation bas was closed</string>
+    <string name="view_all_books">View All Books</string>
+    <string name="search">Search</string>
 </resources>
