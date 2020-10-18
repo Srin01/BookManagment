@@ -11,8 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bookmanagment.Driver.UserDataBaseDriver;
 import com.example.bookmanagment.Expert.UserExpert;
+import com.example.bookmanagment.Modal.Book;
+import com.example.bookmanagment.Modal.User;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import static com.example.bookmanagment.MainActivity.ROOM_ID;
@@ -37,6 +40,7 @@ public class LoginPage extends AppCompatActivity
         setContentView(R.layout.login_page);
 
         bindViews();
+        printDetails();
     }
 
     private void bindViews()
@@ -45,6 +49,17 @@ public class LoginPage extends AppCompatActivity
         password = findViewById(R.id.textInputPassword);
         userDataBaseDriver = new UserDataBaseDriver(this);
         userExpert = new UserExpert(userDataBaseDriver);
+    }
+
+    public void printDetails()
+    {
+        ArrayList<User> users = userDataBaseDriver.getUserList();
+
+        Log.d(TAG, "Your database has " + users.size() + " users ");
+        for (int i = 0; i < users.size(); i++)
+        {
+            Log.d(TAG, users.get(i).getId() + " " +users.get(i).getUserName() + " " + users.get(i).getUserPassword() + " " + users.get(i).getRoomId());
+        }
     }
 
     private void getIntentdata()
@@ -56,11 +71,11 @@ public class LoginPage extends AppCompatActivity
 
     public void onClickLogin(View view)
     {
-        getIntentdata();
+         getIntentdata();
          usernameValue = Objects.requireNonNull(username.getText()).toString();
          userPasswordValue = Objects.requireNonNull(password.getText()).toString();
         //code to check if the entered username and password are matching the correct credentials or not
-
+        Log.d(TAG, "onClickLogin: got " + usernameValue + roomId);
         if(!userExpert.ifUserExistForSpecifiRoom(usernameValue, roomId))
         {
             Toast.makeText(this, "user name = " + usernameValue, Toast.LENGTH_SHORT).show();
@@ -73,7 +88,9 @@ public class LoginPage extends AppCompatActivity
                 Toast.makeText(this, "Login Successful welcome back  " + usernameValue, Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onClickLogin: login successful");
                 startActivityAfterLogin();
+                return;
             }
+            Toast.makeText(this, "Password incorrect", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -83,5 +100,6 @@ public class LoginPage extends AppCompatActivity
         intent.putExtra(ROOM_NAME, roomName);
         intent.putExtra(ROOM_ID, roomId);
         intent.putExtra(USER_NAME, usernameValue);
+        startActivity(intent);
     }
 }

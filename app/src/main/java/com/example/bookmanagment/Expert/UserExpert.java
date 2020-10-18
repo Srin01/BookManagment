@@ -61,7 +61,7 @@ public class UserExpert
     {
         for (int i = 0; i < userList.size(); i++)
         {
-            if(userList.get(i).equals(userName))
+            if(userList.get(i).getUserName().equals(userName))
             {
                 return userList.get(i);
             }
@@ -83,9 +83,11 @@ public class UserExpert
         User user = getUserOfSpecificName(usernameGiven);
         if(user != null) {
         String password = user.getUserPassword();
+            Log.d(TAG, "validatePassword: got pwd " + password);
             return password.equals(passwordGiven);
         }
         else {
+            Log.d(TAG, "validatePassword: got pwd null" );
             return false;
         }
     }

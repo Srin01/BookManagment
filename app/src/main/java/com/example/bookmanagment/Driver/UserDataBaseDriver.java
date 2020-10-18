@@ -74,6 +74,7 @@ public class UserDataBaseDriver
         contentValues.put(UserSchema._userPassword, user.getUserPassword());
         contentValues.put(UserSchema._userQuestion, user.getQuestion());
         contentValues.put(UserSchema._questionAnswer, user.getAnswer());
+        contentValues.put(UserSchema._roomId, user.getRoomId());
         return contentValues;
     }
 
