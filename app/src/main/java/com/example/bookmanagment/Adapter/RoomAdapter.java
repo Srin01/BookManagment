@@ -48,13 +48,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         View view = holder.itemView;
         final TextView roomName = view.findViewById(R.id.room_name1);
         ImageView roomImage = view.findViewById(R.id.room_image1);
-        if(roomExpert.getBitmapImageRoom(position) == null) {
-            roomImage.setImageResource(R.drawable.living_room);
-        }
-        else
-        {
-            roomImage.setImageBitmap(roomExpert.getBitmapImageRoom(position));
-        }
         roomName.setText(roomExpert.getRoomName(position));
     }
 

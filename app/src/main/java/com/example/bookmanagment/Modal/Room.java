@@ -6,13 +6,11 @@ public class Room
 {
     private int id;
     private String roomName;
-    private Bitmap bitmapImage;
 
-    public Room(int id, String roomName, Bitmap bitmap)
+    public Room(int id, String roomName)
     {
         this.id = id;
         this.roomName = roomName;
-        this.bitmapImage = bitmap;
     }
     public Room()
     {
@@ -37,8 +35,4 @@ public class Room
         this.roomName = roomName;
     }
 
-    public Bitmap getBitmapImage()
-    {
-        return bitmapImage;
-    }
 }

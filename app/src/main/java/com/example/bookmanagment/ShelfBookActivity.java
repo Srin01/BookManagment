@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.bookmanagment.Adapter.BookAdapter;
 import com.example.bookmanagment.Adapter.BookAdapter2;
@@ -125,20 +126,21 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
                 bitmap = data.getParcelableExtra("bookImage");
                 Book book = new Book(bookNameValue, rowId, roomId, bitmap);
                 Log.d(TAG, "onActivityResult: new book of room id " + roomId + " is added");
-                if(rowId == 1)
+                try {
+                    if (rowId == 1) {
+                        bookExpertForRoomAndRow1.addNewBook(book);
+                        bookAdapter1.notifyDataSetChanged();
+                    } else if (rowId == 2) {
+                        bookExpertForRoomAndRow2.addNewBook(book);
+                        bookAdapter2.notifyDataSetChanged();
+                    } else {
+                        bookExpertForRoomAndRow3.addNewBook(book);
+                        bookAdapter3.notifyDataSetChanged();
+                    }
+                }catch (Exception e)
                 {
-                    bookExpertForRoomAndRow1.addNewBook(book);
-                    bookAdapter1.notifyDataSetChanged();
-                }
-                else if(rowId == 2)
-                {
-                    bookExpertForRoomAndRow2.addNewBook(book);
-                    bookAdapter2.notifyDataSetChanged();
-                }
-                else
-                {
-                    bookExpertForRoomAndRow3.addNewBook(book);
-                    bookAdapter3.notifyDataSetChanged();
+                    e.printStackTrace();
+                    Toast.makeText(this, "Please provide a book cover photo", Toast.LENGTH_SHORT).show();
                 }
                 Log.d(TAG, "onActivityResult: got data" + bookNameValue + " " + rowId);
                 Log.d(TAG, "onActivityResult: Book" + bookNameValue +" sent to booksRoomExpert");

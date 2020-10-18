@@ -45,7 +45,7 @@ public class BookExpert3 {
 
     public String getSummary(int bookPosition)
     {
-        return bookList.get(bookPosition).getSummary();
+        return bookList.get(bookPosition).getBookAuthor();
     }
 
     public int getTotalBooks()

@@ -16,7 +16,7 @@
         <ImageView
             android:id="@+id/room_image1"
             android:layout_width="match_parent"
-
+            android:src="@drawable/living_room"
             android:layout_height="200dp"
             android:layout_margin="10dp"
 

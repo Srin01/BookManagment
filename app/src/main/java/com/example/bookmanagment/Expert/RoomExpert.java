@@ -55,9 +55,4 @@ public class RoomExpert
     {
         return roomDatabaseDriver.getIdRoomSpeificname(roomName);
     }
-
-    public Bitmap getBitmapImageRoom(int position)
-    {
-        return roomArrayList.get(position).getBitmapImage();
-    }
 }
