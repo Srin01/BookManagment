@@ -120,11 +120,14 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
             if(resultCode == RESULT_OK)
             {
                 String roomName = data.getStringExtra("roomName");
-                int numberOfShelves = data.getIntExtra("numberOfShelves", 1);
                 Room room = new Room();
                 room.setRoomName(roomName);
                 roomExpert.addNewRoom(room);
+                int roomId = roomExpert.getSpecifcId(roomName);
                 roomAdapter.notifyDataSetChanged();
+                Intent intent1 = new Intent(this, SignUpPage.class);
+                intent1.putExtra("roomId", roomId);
+                startActivity(intent1);
             }
         }
         printDetails();

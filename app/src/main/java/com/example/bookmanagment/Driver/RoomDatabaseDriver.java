@@ -9,6 +9,7 @@ import android.util.Log;
 import com.example.bookmanagment.Modal.Book;
 import com.example.bookmanagment.Modal.Room;
 import com.example.bookmanagment.SQL.BookSqlHelper;
+import com.example.bookmanagment.Schema.BookSchema;
 import com.example.bookmanagment.Schema.RoomSchema;
 
 import java.util.ArrayList;
@@ -55,6 +56,18 @@ public class RoomDatabaseDriver
         }
 
         return roomList;
+    }
+
+    public int getIdRoomSpeificname(String name)
+    {
+        roomList = new ArrayList<>();
+        String selection = RoomSchema._roomName + " = ?";
+        String[] selectionArgs = {name};
+
+        String[] columns = {RoomSchema._roomName};
+        Cursor cursor = sqLiteDatabase.query(RoomSchema._tableName, columns, selection, selectionArgs,null,null, null);
+
+        return cursor.getInt(cursor.getColumnIndex(RoomSchema._roomId));
     }
 
     public void insertNewRoom(Room room)

@@ -36,4 +36,21 @@ public class RoomExpert
     {
         return roomArrayList.size();
     }
+
+    public int getRoomIDOfSpecificName(String roomName)
+    {
+        for (int i = 0; i <roomArrayList.size() ; i++)
+        {
+            if(roomName.equals(roomArrayList.get(i).getRoomName()))
+            {
+                return roomArrayList.get(i).getId();
+            }
+        }
+        return 1;
+    }
+
+    public int getSpecifcId(String roomName)
+    {
+        return roomDatabaseDriver.getIdRoomSpeificname(roomName);
+    }
 }
