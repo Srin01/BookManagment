@@ -15,4 +15,14 @@
     <string name="closed">Navigation bas was closed</string>
     <string name="view_all_books">View All Books</string>
     <string name="search">Search</string>
+
+    <string-array name="questions">
+        <item>In what city were you born?</item>
+        <item>In what year was your father born?</item>
+        <item>What is the name of your pet?</item>
+        <item>What school did you attend for sixth grade?</item>
+        <item>What was your childhood nickname?</item>
+    </string-array>
+
+
 </resources>
