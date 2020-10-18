@@ -1,6 +1,7 @@
 package com.example.bookmanagment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -37,11 +38,13 @@ public class SearchActivity extends AppCompatActivity
 
         for(int i = 0; i < books.size(); i++)
         {
+            Log.d(MainActivity.TAG, "onCreate: book created for search "+ books.get(i).getBookName());
             bookNames.add(books.get(i).getBookName());
         }
 
         adapter = new ArrayAdapter<>(this, R.layout.search_list_item,R.id.book_name, bookNames);
         listView.setAdapter(adapter);
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
