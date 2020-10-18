@@ -12,7 +12,7 @@ public class UserExpert
 {
     UserDataBaseDriver userDataBaseDriver;
     ArrayList<User> userList ;
-
+    int id = 0;
     public UserExpert(UserDataBaseDriver userDataBaseDriver)
     {
         this.userDataBaseDriver = userDataBaseDriver;
@@ -92,12 +92,12 @@ public class UserExpert
         }
     }
 
-    public boolean ifUserExistForSpecifiRoom(String usernameValue, int roomId)
-    {
-        User user = userDataBaseDriver.getUserFromSpecifRoom(roomId);
-        if(user != null) {
+    public boolean ifUserExistForSpecifiRoom(String usernameValue, int roomId) {
+        User user = userDataBaseDriver.getUserFromSpecifRoom(roomId).get(0);
+        if (user != null) {
             return user.getUserName().equals(usernameValue);
+        } else {
+            return false;
         }
-        return false;
     }
 }

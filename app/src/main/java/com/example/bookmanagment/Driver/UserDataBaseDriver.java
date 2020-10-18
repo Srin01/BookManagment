@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.example.bookmanagment.Modal.User;
 import com.example.bookmanagment.SQL.BookSqlHelper;
-import com.example.bookmanagment.Schema.BookSchema;
 import com.example.bookmanagment.Schema.UserSchema;
 
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ public class UserDataBaseDriver
     Context context;
     private SQLiteDatabase sqLiteDatabase;
     private ArrayList<User> userList;
+    int id = 1;
 
     public UserDataBaseDriver(Context context)
     {
@@ -69,7 +69,7 @@ public class UserDataBaseDriver
     private ContentValues insertContentValues(User user)
     {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(UserSchema._userId, user.getId());
+        contentValues.put(UserSchema._userId, id++);
         contentValues.put(UserSchema._userName, user.getUserName());
         contentValues.put(UserSchema._userPassword, user.getUserPassword());
         contentValues.put(UserSchema._userQuestion, user.getQuestion());
@@ -78,15 +78,28 @@ public class UserDataBaseDriver
         return contentValues;
     }
 
-    public User getUserFromSpecifRoom(int roomId)
+    public String getSinlgeEntry(int roomId)
+    {
+        Cursor cursor=sqLiteDatabase.query(UserSchema._tableName, null, " room_id=?", new String[]{String.valueOf(roomId)}, null, null, null);
+        if(cursor.getCount()<1) // UserName Not Exist
+        {
+            cursor.close();
+            return "NOT EXIST";
+        }
+        cursor.moveToFirst();
+        String password= cursor.getString(cursor.getColumnIndex(UserSchema._userPassword));
+        cursor.close();
+        return password;
+    }
+
+    public ArrayList<User> getUserFromSpecifRoom(int roomId)
     {
         String selection = UserSchema._roomId + " = ?" ;
         String[] selectionArgs = {String.valueOf(roomId)};
         String[] columns = {UserSchema._userId, UserSchema._userName, UserSchema._userPassword, UserSchema._userQuestion, UserSchema._questionAnswer, UserSchema._roomId};
         Cursor cursor = sqLiteDatabase.query(UserSchema._tableName, columns, selection, selectionArgs, null, null, null);
 
-        if(cursor != null && cursor.getCount() > 0 && cursor.moveToFirst())
-        {
+        if(cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
                 int id = cursor.getInt(cursor.getColumnIndex(UserSchema._userId));
@@ -94,10 +107,12 @@ public class UserDataBaseDriver
                 String user_pwd = cursor.getString(cursor.getColumnIndex(UserSchema._userPassword));
                 String question = cursor.getString(cursor.getColumnIndex(UserSchema._userQuestion));
                 String answer = cursor.getString(cursor.getColumnIndex(UserSchema._questionAnswer));
-                int roomIdt = cursor.getInt(cursor.getColumnIndex(UserSchema._roomId));
-                return new User(id, username, user_pwd, question, answer, roomIdt );
-            }while (cursor.moveToNext());
+                int rid = cursor.getInt(cursor.getColumnIndex(UserSchema._roomId));
+                User user = new User(id, username, user_pwd, question, answer, rid);
+                userList.add(user);
+
+            } while (cursor.moveToNext());
         }
-        return null;
+        return userList;
     }
 }

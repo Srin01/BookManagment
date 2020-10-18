@@ -76,13 +76,7 @@ public class LoginPage extends AppCompatActivity
          userPasswordValue = Objects.requireNonNull(password.getText()).toString();
         //code to check if the entered username and password are matching the correct credentials or not
         Log.d(TAG, "onClickLogin: got " + usernameValue + roomId);
-        if(!userExpert.ifUserExistForSpecifiRoom(usernameValue, roomId))
-        {
-            Toast.makeText(this, "user name = " + usernameValue, Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "User Name Invalid", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+
             if(userExpert.validatePassword(usernameValue, userPasswordValue))
             {
                 Toast.makeText(this, "Login Successful welcome back  " + usernameValue, Toast.LENGTH_SHORT).show();
@@ -91,7 +85,7 @@ public class LoginPage extends AppCompatActivity
                 return;
             }
             Toast.makeText(this, "Password incorrect", Toast.LENGTH_SHORT).show();
-        }
+
     }
 
     private void startActivityAfterLogin()

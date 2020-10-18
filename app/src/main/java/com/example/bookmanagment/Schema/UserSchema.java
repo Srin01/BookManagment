@@ -10,5 +10,5 @@ public class UserSchema implements DatabaseSchema
     public static final String _questionAnswer = "answer";
     public static final String _roomId = "room_id";
 
-    public static final String _createTableUser = "CREATE TABLE "+ _tableName +" (" +_userId+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + _userName+ " VARCHAR(45), " +_userPassword+" VARCHAR(45), " + _userQuestion+" VARCHAR(45), " + _questionAnswer+ " VARCHAR(45), "+ _roomId +" INTEGER );" ;
+    public static final String _createTableUser = "CREATE TABLE "+ _tableName +" (" +_userId+ " INTEGER , " + _userName+ " VARCHAR(45), " +_userPassword+" VARCHAR(45), " + _userQuestion+" VARCHAR(45), " + _questionAnswer+ " VARCHAR(45), "+ _roomId +" INTEGER );" ;
 }

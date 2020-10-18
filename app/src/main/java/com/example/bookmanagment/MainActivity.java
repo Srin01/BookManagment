@@ -115,8 +115,6 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1)
-        {
             if(resultCode == RESULT_OK)
             {
                 assert data != null;
@@ -125,12 +123,13 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
                 room.setRoomName(roomName);
                 roomExpert.addNewRoom(room);
                 int roomId = roomExpert.getSpecifcId(roomName);
+                Log.d(TAG, "onActivityResult: roomId is " + roomId);
                 roomAdapter.notifyDataSetChanged();
                 Intent intent1 = new Intent(this, SignUpPage.class);
                 intent1.putExtra("roomId", roomId);
                 startActivity(intent1);
             }
-        }
+
         printDetails();
     }
 

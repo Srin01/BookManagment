@@ -3,6 +3,7 @@ package com.example.bookmanagment.Modal;
 public class Room
 {
     private int id;
+    private String roomName;
 
     public Room(int id, String roomName)
     {
@@ -13,9 +14,6 @@ public class Room
     {
         
     }
-
-    private int NumberOfShelf;
-    private String roomName;
 
     public int getId()
     {
