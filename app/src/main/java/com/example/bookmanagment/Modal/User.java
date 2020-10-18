@@ -27,6 +27,14 @@ public class User
         this.answer = answer;
     }
 
+    public User( String userName, String userPassword, String question, String answer)
+    {
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.question = question;
+        this.answer = answer;
+    }
+
     public User()
     {
     }

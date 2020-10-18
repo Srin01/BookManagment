@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bookmanagment.Driver.UserDataBaseDriver;
 import com.example.bookmanagment.Expert.UserExpert;
+import com.example.bookmanagment.Modal.User;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class SignUpPage extends AppCompatActivity
@@ -28,7 +29,6 @@ public class SignUpPage extends AppCompatActivity
         setContentView(R.layout.sign_up_page);
 
         bindViews();
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, getResources().getStringArray(R.array.questions));
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         securityQuestion.setAdapter(adapter);
