@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
         {
             if(resultCode == RESULT_OK)
             {
+                assert data != null;
                 String roomName = data.getStringExtra("roomName");
                 Room room = new Room();
                 room.setRoomName(roomName);

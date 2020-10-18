@@ -19,7 +19,7 @@ public class User
         return id;
     }
 
-    public User(String userName, String userPassword, String question, String answer, int roomId)
+    public User(int id, String userName, String userPassword, String question, String answer, int roomId)
     {
         this.userName = userName;
         this.userPassword = userPassword;
@@ -28,8 +28,9 @@ public class User
         this.roomId = roomId;
     }
 
-    public User( String userName, String userPassword, String question, String answer)
+    public User( String userName, String userPassword, String question, String answer, int roomId)
     {
+        this.roomId = roomId;
         this.userName = userName;
         this.userPassword = userPassword;
         this.question = question;
@@ -39,6 +40,8 @@ public class User
     public User()
     {
     }
+
+    public int getRoomId() { return roomId; }
 
     public String getUserName() {
         return userName;

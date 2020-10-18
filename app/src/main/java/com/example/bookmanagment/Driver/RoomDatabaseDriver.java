@@ -64,10 +64,19 @@ public class RoomDatabaseDriver
         String selection = RoomSchema._roomName + " = ?";
         String[] selectionArgs = {name};
 
-        String[] columns = {RoomSchema._roomName};
+        String[] columns = {RoomSchema._roomId};
         Cursor cursor = sqLiteDatabase.query(RoomSchema._tableName, columns, selection, selectionArgs,null,null, null);
 
-        return cursor.getInt(cursor.getColumnIndex(RoomSchema._roomId));
+        if(cursor != null && cursor.getCount() > 0 && cursor.moveToFirst())
+        {
+            cursor.moveToFirst();
+            do {
+                int id = cursor.getInt(cursor.getColumnIndex(RoomSchema._roomId));
+                return id;
+
+            }while (cursor.moveToNext());
+        }
+        return 1;
     }
 
     public void insertNewRoom(Room room)

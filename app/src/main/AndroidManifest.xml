@@ -21,6 +21,7 @@
         <activity android:name=".BookViewerActivity" />
         <activity android:name=".PDFActivity" />
         <activity android:name=".LoginPage"/>
+        <activity android:name=".SignUpPage"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
