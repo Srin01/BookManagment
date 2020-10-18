@@ -19,9 +19,8 @@ public class User
         return id;
     }
 
-    public User(int id, String userName, String userPassword, String question, String answer, int roomId)
+    public User(String userName, String userPassword, String question, String answer, int roomId)
     {
-        this.id = id;
         this.userName = userName;
         this.userPassword = userPassword;
         this.question = question;
