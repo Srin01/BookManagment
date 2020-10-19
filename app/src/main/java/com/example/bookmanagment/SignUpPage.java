@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -99,6 +98,7 @@ public class SignUpPage extends AppCompatActivity
                 {
                     setPasswordLayout.setError(calculateStrength(charSequence.toString()));
                     setPasswordLayout.setErrorEnabled(true);
+                    return;
                 }
                 else
                 {
@@ -141,11 +141,11 @@ public class SignUpPage extends AppCompatActivity
         if( password.matches("(?=.*[~!@#$%^&*()_-]).*") )
             iPasswordScore += 2;
 
-        if(iPasswordScore < 4)
+        if(iPasswordScore > 0 && iPasswordScore < 4)
         {
             return "Password is weak";
         }
-        else if(iPasswordScore < 8)
+        else if(iPasswordScore >= 4 && iPasswordScore < 8)
         {
             return "Password Strength is medium";
         }
@@ -175,7 +175,6 @@ public class SignUpPage extends AppCompatActivity
 
         Intent intent = getIntent();
         int id = intent.getIntExtra("roomId", 1);
-        Log.d("myTag", "onClickSignUp: roomId " + id);
         User user = new User(username.getText().toString(), confirmedPassword.getText().toString(), securityQuestion.getSelectedItem().toString() ,securityAnswer.getText().toString(), id);
         userExpert.AddNewUser(user);
         finish();
@@ -183,6 +182,11 @@ public class SignUpPage extends AppCompatActivity
 
     private boolean isNull(String s)
     {
-        return s.equals("");
+        if(s.equals(""))
+        {
+            return true;
+        }
+        else
+            return false;
     }
 }

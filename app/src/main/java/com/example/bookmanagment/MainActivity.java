@@ -1,13 +1,5 @@
 package com.example.bookmanagment;
 
-import android.Manifest;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,6 +9,15 @@ import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.Manifest;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.bookmanagment.Adapter.RoomAdapter;
 import com.example.bookmanagment.Driver.RoomDatabaseDriver;
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
 
     public void OnclickAddExtraRoom(View view)
     {
-        Intent addRoomIntent = new Intent(this,AddExtraRoom.class);
+        Intent addRoomIntent = new Intent(this,AddExtraRoomActivity.class);
         startActivityForResult(addRoomIntent, 1);
         roomAdapter.notifyDataSetChanged();
     }
@@ -135,8 +136,8 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-            if(resultCode == RESULT_OK)
-            {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
                 assert data != null;
                 String roomName = data.getStringExtra("roomName");
                 Room room = new Room();
@@ -149,8 +150,8 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
                 intent1.putExtra("roomId", roomId);
                 startActivity(intent1);
             }
-
-        printDetails();
+            printDetails();
+        }
     }
 
     @Override

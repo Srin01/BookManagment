@@ -37,7 +37,7 @@ public class RoomDatabaseDriver
     {
         roomList = new ArrayList<>();
 
-        String[] columns = {RoomSchema._roomId, RoomSchema._roomName, RoomSchema._roomImage};
+        String[] columns = {RoomSchema._roomId, RoomSchema._roomName};
         Cursor cursor = sqLiteDatabase.query(RoomSchema._tableName, columns, null, null, null, null, null);
 
         return getListOfBooksFromDb(cursor);
@@ -45,15 +45,13 @@ public class RoomDatabaseDriver
 
     private ArrayList<Room> getListOfBooksFromDb(Cursor cursor)
     {
-        if(cursor != null && cursor.getCount() > 0)
+        if(cursor != null && cursor.getCount() > 0 && cursor.moveToFirst())
         {
             cursor.moveToFirst();
             do {
                 int id = cursor.getInt(cursor.getColumnIndex(RoomSchema._roomId));
                 String roomName = cursor.getString(cursor.getColumnIndex(RoomSchema._roomName));
-                byte[] image = cursor.getBlob(cursor.getColumnIndex(RoomSchema._roomImage));
-                Bitmap bitmap = BitmapFactory.decodeByteArray(image,0,image.length);
-                Room room = new Room(id, roomName, bitmap);
+                Room room = new Room(id, roomName);
                 roomList.add(room);
 
             }while (cursor.moveToNext());
@@ -93,13 +91,7 @@ public class RoomDatabaseDriver
     private ContentValues insertContentValues(Room room)
     {
         ContentValues contentValues = new ContentValues();
-        Bitmap bitmap = room.getBitmapImage();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        if(bitmap != null)
-            bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
-        byte[] bytes = stream.toByteArray();
         contentValues.put(RoomSchema._roomName, room.getRoomName());
-        contentValues.put(RoomSchema._roomImage, bytes);
         return contentValues;
     }
 }
