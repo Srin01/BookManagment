@@ -15,34 +15,47 @@ import com.example.bookmanagment.Schema.BookSchema;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-import static com.example.bookmanagment.MainActivity.TAG;
+import static com.example.bookmanagment.Activities.MainActivity.TAG;
 
 public class BookDatabaseDriver
 {
-    SQLiteDatabase booksqLiteDatabase;
-    BookSqlHelper bookSqlHelper;
-    Context context;
-    ArrayList<Book> bookList;
-    ArrayList<Book> spclBookList;
-    int id ;
-    int roomID ;
-    int rowNumber;
-    Bitmap bitmap;
-    int bookPosition ;
-    String bookAuthor;
-    String bookName;
-    byte[] image;
+    private SQLiteDatabase booksqLiteDatabase;
+    private int id ;
+    private int roomID ;
+    private int rowNumber;
+    private Bitmap bitmap;
+    private int bookPosition ;
+    private String bookAuthor;
+    private String bookName;
+    private byte[] image;
 
     public BookDatabaseDriver(Context context)
     {
-        this.context = context;
-        bookSqlHelper = new BookSqlHelper(context);
+        BookSqlHelper bookSqlHelper = new BookSqlHelper(context);
         booksqLiteDatabase = bookSqlHelper.getWritableDatabase();
+    }
+
+    private void bindValues(Cursor cursor)
+    {
+        id = cursor.getInt(cursor.getColumnIndex(BookSchema._bookId));
+        bookName = cursor.getString(cursor.getColumnIndex(BookSchema._bookName));
+        roomID = cursor.getInt(cursor.getColumnIndex(BookSchema._roomID));
+        rowNumber = cursor.getInt(cursor.getColumnIndex(BookSchema._rowNumber));
+        bookPosition = cursor.getInt(cursor.getColumnIndex(BookSchema._bookPosition));
+        bookAuthor = cursor.getString(cursor.getColumnIndex(BookSchema._bookAuthor));
+        image = cursor.getBlob(cursor.getColumnIndex(BookSchema._bookImage));
+    }
+
+    private byte[] convertBitmapToBytes(Bitmap bitmap)
+    {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
+        return stream.toByteArray();
     }
 
     public ArrayList<Book> getAllBooks()
     {
-        bookList = new ArrayList<>();
+        ArrayList<Book> bookList = new ArrayList<>();
 
         String[] columns = {BookSchema._bookId, BookSchema._bookName ,BookSchema._roomID,  BookSchema._rowNumber, BookSchema._bookPosition, BookSchema._bookAuthor, BookSchema._bookImage};
         Cursor cursor = booksqLiteDatabase.query(BookSchema._tableName, columns, null, null, null, null, null);
@@ -64,7 +77,7 @@ public class BookDatabaseDriver
     {
         String selection = BookSchema._roomID + " = ? " + " AND " + BookSchema._rowNumber + " = ?";
         String[] selectionArgs = {String.valueOf(roomIDFromIntent), String.valueOf(rowId)};
-        spclBookList = new ArrayList<>();
+        ArrayList<Book> spclBookList = new ArrayList<>();
         String[] columns = {BookSchema._bookId, BookSchema._bookName ,BookSchema._roomID,  BookSchema._rowNumber, BookSchema._bookPosition, BookSchema._bookAuthor, BookSchema._bookImage};
         Cursor cursor = booksqLiteDatabase.query(BookSchema._tableName, columns, selection, selectionArgs,null,null, null);
 
@@ -80,18 +93,6 @@ public class BookDatabaseDriver
             cursor.close();
         }
             return spclBookList;
-
-    }
-
-    private void bindValues(Cursor cursor)
-    {
-        id = cursor.getInt(cursor.getColumnIndex(BookSchema._bookId));
-        bookName = cursor.getString(cursor.getColumnIndex(BookSchema._bookName));
-        roomID = cursor.getInt(cursor.getColumnIndex(BookSchema._roomID));
-        rowNumber = cursor.getInt(cursor.getColumnIndex(BookSchema._rowNumber));
-        bookPosition = cursor.getInt(cursor.getColumnIndex(BookSchema._bookPosition));
-        bookAuthor = cursor.getString(cursor.getColumnIndex(BookSchema._bookAuthor));
-        image = cursor.getBlob(cursor.getColumnIndex(BookSchema._bookImage));
     }
 
     public void insertNewBook(Book book)
@@ -104,15 +105,11 @@ public class BookDatabaseDriver
     private ContentValues insertContentValues(Book book)
     {
         ContentValues contentValues = new ContentValues();
-        Bitmap bitmap = book.getBitmapImage();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
-        byte[] bytes = stream.toByteArray();
         contentValues.put(BookSchema._roomID, book.getRoomID());
         contentValues.put(BookSchema._bookName, book.getBookName());
         contentValues.put(BookSchema._rowNumber, book.getRowNumber());
         contentValues.put(BookSchema._bookPosition, book.getBookPositionInRow());
-        contentValues.put(BookSchema._bookImage,bytes);
+        contentValues.put(BookSchema._bookImage,convertBitmapToBytes(book.getBitmapImage()));
         return contentValues;
     }
 }

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bookmanagment.Expert.BookExpertForRoomAndRow;
 import com.example.bookmanagment.R;
 
-import static com.example.bookmanagment.MainActivity.TAG;
+import static com.example.bookmanagment.Activities.MainActivity.TAG;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyBookViewHolder>
 {
@@ -24,6 +24,12 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyBookViewHold
     ImageView imageView;
     OnBookListerner onBookListerner;
 
+    private void bindViews(View view)
+    {
+        bookName = view.findViewById(R.id.book_name);
+        imageView = view.findViewById(R.id.imageView_book);
+    }
+
     public BookAdapter(Context context, BookExpertForRoomAndRow bookExpertForRoomAndRow, OnBookListerner onBookListerner)
     {
         this.context = context;
@@ -31,14 +37,16 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyBookViewHold
         this.onBookListerner = onBookListerner;
     }
 
-
-    @NonNull
     @Override
-    public MyBookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public int getItemCount()
     {
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.item_book, parent, false);
-        return new MyBookViewHolder(view, onBookListerner);
+        Log.d(TAG, "getItemCount: there are " + bookExpertForRoomAndRow.getTotalBooks() + " no of books for adapter view");
+        return bookExpertForRoomAndRow.getTotalBooks();
+    }
+
+    public interface OnBookListerner
+    {
+        void onBookClick1(int position);
     }
 
     @Override
@@ -51,17 +59,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyBookViewHold
         imageView.setImageBitmap(bookExpertForRoomAndRow.getBitmapImage(position));
     }
 
-    private void bindViews(View view)
-    {
-        bookName = view.findViewById(R.id.book_name);
-        imageView = view.findViewById(R.id.imageView_book);
-    }
-
+    @NonNull
     @Override
-    public int getItemCount()
+    public MyBookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
-        Log.d(TAG, "getItemCount: there are " + bookExpertForRoomAndRow.getTotalBooks() + " no of books for adapter view");
-        return bookExpertForRoomAndRow.getTotalBooks();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        View view = layoutInflater.inflate(R.layout.item_book, parent, false);
+        return new MyBookViewHolder(view, onBookListerner);
     }
 
     public static class MyBookViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
@@ -80,10 +84,5 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyBookViewHold
         public void onClick(View view) {
             onBookListerner.onBookClick1(getAdapterPosition());
         }
-    }
-
-    public interface OnBookListerner
-    {
-        void onBookClick1(int position);
     }
 }

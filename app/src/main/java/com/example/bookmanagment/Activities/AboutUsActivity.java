@@ -1,9 +1,11 @@
-package com.example.bookmanagment;
+package com.example.bookmanagment.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.bookmanagment.R;
 
 import mehdi.sakout.aboutpage.AboutPage;
 

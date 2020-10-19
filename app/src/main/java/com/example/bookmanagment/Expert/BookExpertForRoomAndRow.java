@@ -8,13 +8,13 @@ import com.example.bookmanagment.Modal.Book;
 
 import java.util.ArrayList;
 
-import static com.example.bookmanagment.MainActivity.TAG;
+import static com.example.bookmanagment.Activities.MainActivity.TAG;
 
 public class BookExpertForRoomAndRow
 {
-    BookDatabaseDriver bookDatabaseDriver;
-    ArrayList<Book> bookList ;
-    int roomId;
+    private BookDatabaseDriver bookDatabaseDriver;
+    private ArrayList<Book> bookList ;
+    private int roomId;
 
     public BookExpertForRoomAndRow(int roomID, BookDatabaseDriver bookdatabaseDriver)
     {

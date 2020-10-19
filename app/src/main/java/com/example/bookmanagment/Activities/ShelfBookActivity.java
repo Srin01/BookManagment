@@ -1,4 +1,4 @@
-package com.example.bookmanagment;
+package com.example.bookmanagment.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,33 +25,36 @@ import com.example.bookmanagment.Expert.BookExpert2;
 import com.example.bookmanagment.Expert.BookExpert3;
 import com.example.bookmanagment.Expert.BookExpertForRoomAndRow;
 import com.example.bookmanagment.Modal.Book;
+import com.example.bookmanagment.R;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-import static com.example.bookmanagment.BookViewerActivity.ROW_ID;
+import static com.example.bookmanagment.Activities.BookViewerActivity.ROW_ID;
 
 public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.OnBookListerner,BookAdapter3.OnBookListerner3,BookAdapter2.OnBookListerner2
 {
     public static final String BOOK_ID = "book_id" ;
     public static final String BOOK_POS ="book_pos" ;
     public static final String BOOK_ROOM_ID = "book_room_id";
-    RecyclerView booksListRecyclerViewrow1;
-    RecyclerView booksListRecyclerViewrow2;
-    RecyclerView booksListRecyclerViewrow3;
-    BookDatabaseDriver bookDatabaseDriver;
-    BookAdapter bookAdapter1;
-    BookAdapter2 bookAdapter2;
-    BookAdapter3 bookAdapter3;
-    BookExpertForRoomAndRow bookExpertForRoomAndRow1;
-    BookExpert2 bookExpertForRoomAndRow2;
-    BookExpert3 bookExpertForRoomAndRow3;
-    Bitmap bitmap;
-    Toolbar toolbar;
-    DrawerLayout drawerLayout;
-    String TAG = "myTag";
-    int roomId;
-    String roomName;
+    public static final String TAG = "myTag";
+    private RecyclerView booksListRecyclerViewrow1;
+    private RecyclerView booksListRecyclerViewrow2;
+    private RecyclerView booksListRecyclerViewrow3;
+    private BookDatabaseDriver bookDatabaseDriver;
+    private BookAdapter bookAdapter1;
+    private BookAdapter2 bookAdapter2;
+    private BookAdapter3 bookAdapter3;
+    private BookExpertForRoomAndRow bookExpertForRoomAndRow1;
+    private BookExpert2 bookExpertForRoomAndRow2;
+    private BookExpert3 bookExpertForRoomAndRow3;
+    private Bitmap bitmap;
+    private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private String getBookPosTAG = "myTag";
+    private int roomId;
+    private String roomName;
+    private String bookNameValue;
     int rowId;
 
     @Override
@@ -71,9 +74,7 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
     void setAdapter()
     {
         getDataFromIntent();
-        bookExpertForRoomAndRow1 = new BookExpertForRoomAndRow(roomId, bookDatabaseDriver);
-        bookExpertForRoomAndRow2 = new BookExpert2(roomId, bookDatabaseDriver);
-        bookExpertForRoomAndRow3 = new BookExpert3(roomId, bookDatabaseDriver);
+        createNewExperts();
         Log.d(TAG, "setAdapter: Adapter with room ID set and row Id = "+ rowId );
         bookAdapter1 = new BookAdapter(this, bookExpertForRoomAndRow1,this);
         bookAdapter2 = new BookAdapter2(this, bookExpertForRoomAndRow2,this);
@@ -83,16 +84,28 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
         booksListRecyclerViewrow3.setAdapter(bookAdapter3);
     }
 
+    private void createNewExperts()
+    {
+        bookExpertForRoomAndRow1 = new BookExpertForRoomAndRow(roomId, bookDatabaseDriver);
+        bookExpertForRoomAndRow2 = new BookExpert2(roomId, bookDatabaseDriver);
+        bookExpertForRoomAndRow3 = new BookExpert3(roomId, bookDatabaseDriver);
+    }
+
     private void bindViews()
     {
         booksListRecyclerViewrow1 = findViewById(R.id.books_recyclerView_row1);
         booksListRecyclerViewrow2 = findViewById(R.id.books_recyclerView_row2);
         booksListRecyclerViewrow3 = findViewById(R.id.books_recyclerView_row3);
+        setRecyclerView();
+        bookDatabaseDriver = new BookDatabaseDriver(this);
+        setAdapter();
+    }
+
+    private void setRecyclerView()
+    {
         booksListRecyclerViewrow1.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         booksListRecyclerViewrow2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         booksListRecyclerViewrow3.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        bookDatabaseDriver = new BookDatabaseDriver(this);
-        setAdapter();
     }
 
     private void getDataFromIntent()
@@ -120,7 +133,7 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
 
     public void OnclickAddExtraBookByOpeningActitvity(View view)
     {
-        Intent addRoomIntent = new Intent(this,AddExtraBookActivity.class);
+        Intent addRoomIntent = new Intent(this, AddExtraBookActivity.class);
         startActivityForResult(addRoomIntent, 1);
         Log.d(TAG, "OnclickAddExtraBookByOpeningActitvity: Activity intent clicked");
     }
@@ -132,10 +145,7 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
         {
             if(resultCode == RESULT_OK)
             {
-                assert data != null;
-                String bookNameValue = data.getStringExtra("bookName");
-                rowId = data.getIntExtra("RowNumber", 1);
-                bitmap = data.getParcelableExtra("bookImage");
+                extractValuesFromIntent(data);
                 Book book = new Book(bookNameValue, rowId, roomId, bitmap);
                 Log.d(TAG, "onActivityResult: new book of room id " + roomId + " is added");
                 try {
@@ -160,6 +170,13 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
         }
     }
 
+    private void extractValuesFromIntent(Intent data)
+    {
+        assert data != null;
+        bookNameValue = data.getStringExtra("bookName");
+        rowId = data.getIntExtra("RowNumber", 1);
+        bitmap = data.getParcelableExtra("bookImage");
+    }
 
     @Override
     public void onBookClick1(int position) {

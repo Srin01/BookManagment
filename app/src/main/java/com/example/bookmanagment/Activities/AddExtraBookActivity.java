@@ -1,4 +1,4 @@
-package com.example.bookmanagment;
+package com.example.bookmanagment.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,16 +17,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static com.example.bookmanagment.MainActivity.OPEN_CAMERA_CODE;
+import com.example.bookmanagment.R;
+
+import java.util.Objects;
+
+import static com.example.bookmanagment.Activities.MainActivity.OPEN_CAMERA_CODE;
 
 public class AddExtraBookActivity extends AppCompatActivity
 {
-    TextView bookName;
-    TextView rowNumber;
-    Button submitButton;
-    Button cameraButton;
-    ImageView sampleImage;
-    Bitmap bitmap = null;
+    private TextView bookName;
+    private TextView rowNumber;
+    private Button cameraButton;
+    private ImageView sampleImage;
+    private Bitmap bitmap = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,6 @@ public class AddExtraBookActivity extends AppCompatActivity
     {
         bookName = findViewById(R.id.textInputBookName);
         rowNumber = findViewById(R.id.textInputRowNumber);
-        submitButton = findViewById(R.id.submitButton);
         cameraButton = findViewById(R.id.cameraButton);
         sampleImage = findViewById(R.id.imageSampleView);
     }
@@ -48,12 +50,16 @@ public class AddExtraBookActivity extends AppCompatActivity
     {
         String bookNameValue = bookName.getText().toString();
         int rowNumberValue = Integer.parseInt(rowNumber.getText().toString());
-        Intent intent = getIntent();
+        addExtraValue(getIntent(), bookNameValue, rowNumberValue);
+        finish();
+    }
+
+    private void addExtraValue(Intent intent, String bookNameValue, int rowNumberValue)
+    {
         intent.putExtra("bookName", bookNameValue);
         intent.putExtra("RowNumber", rowNumberValue);
         intent.putExtra("bookImage", bitmap);
         setResult(RESULT_OK, intent);
-        finish();
     }
 
     public void onClickOpenCameraIntent(View view)
@@ -63,6 +69,11 @@ public class AddExtraBookActivity extends AppCompatActivity
             cameraButton.setEnabled(false);
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, OPEN_CAMERA_CODE);
         }
+        startActivity();
+    }
+
+    private void startActivity()
+    {
         Intent takePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(takePhoto, OPEN_CAMERA_CODE);
     }
@@ -75,7 +86,7 @@ public class AddExtraBookActivity extends AppCompatActivity
         {
             if(resultCode == RESULT_OK)
             {
-                bitmap = (Bitmap) data.getExtras().get("data");
+                bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
                 sampleImage.setImageBitmap(bitmap);
             }
         }

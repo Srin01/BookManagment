@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class RoomExpert
 {
-    RoomDatabaseDriver roomDatabaseDriver;
-    ArrayList<Room> roomArrayList;
+    private RoomDatabaseDriver roomDatabaseDriver;
+    private ArrayList<Room> roomArrayList;
     public RoomExpert(RoomDatabaseDriver roomDatabaseDriver)
     {
         this.roomDatabaseDriver = roomDatabaseDriver;

@@ -6,13 +6,12 @@ import com.example.bookmanagment.Modal.User;
 
 import java.util.ArrayList;
 
-import static com.example.bookmanagment.MainActivity.TAG;
+import static com.example.bookmanagment.Activities.MainActivity.TAG;
 
 public class UserExpert
 {
-    UserDataBaseDriver userDataBaseDriver;
-    ArrayList<User> userList ;
-    int id = 0;
+    private UserDataBaseDriver userDataBaseDriver;
+    private ArrayList<User> userList ;
     public UserExpert(UserDataBaseDriver userDataBaseDriver)
     {
         this.userDataBaseDriver = userDataBaseDriver;
@@ -53,10 +52,6 @@ public class UserExpert
         Log.d(TAG, "addNewUser: User " + user.getUserName() +"Added to db");
     }
 
-    public String getUserName(int userPosition)
-    {
-        return userList.get(userPosition).getUserName();
-    }
     public User getUserOfSpecificName(String userName)
     {
         for (int i = 0; i < userList.size(); i++)
@@ -68,6 +63,7 @@ public class UserExpert
         }
         return null;
     }
+
     public boolean ifUserExist(String userName)
     {
         User user = getUserOfSpecificName(userName);
@@ -103,14 +99,5 @@ public class UserExpert
         }
     }
         return null;
-    }
-
-    public boolean ifUserExistForSpecifiRoom(String usernameValue, int roomId) {
-        User user = userDataBaseDriver.getUserFromSpecifRoom(roomId).get(0);
-        if (user != null) {
-            return user.getUserName().equals(usernameValue);
-        } else {
-            return false;
-        }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.bookmanagment.Driver;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,31 +13,34 @@ import com.example.bookmanagment.Schema.UserSchema;
 
 import java.util.ArrayList;
 
-import static com.example.bookmanagment.BookViewerActivity.TAG;
+import static com.example.bookmanagment.Activities.BookViewerActivity.TAG;
 
 public class UserDataBaseDriver
 {
-    BookSqlHelper userSqlHelper;
-    Context context;
     private SQLiteDatabase sqLiteDatabase;
     private ArrayList<User> userList;
-    int id = 1;
+    private int id = 1;
+    private String username;
+    private String user_pwd ;
+    private String question;
+    private String answer ;
+    private String[] columns = {UserSchema._userId, UserSchema._userName, UserSchema._userPassword, UserSchema._userQuestion, UserSchema._questionAnswer, UserSchema._roomId};
+    int rid ;
 
-    public UserDataBaseDriver(Context context)
+    private void addUserValues()
     {
-        this.context = context;
-        userSqlHelper = new BookSqlHelper(context);
-        sqLiteDatabase = userSqlHelper.getWritableDatabase();
+        User user = new User(id, username, user_pwd, question, answer, rid);
+        userList.add(user);
     }
 
-    public ArrayList<User> getUserList()
+    private void extractUserValues(Cursor cursor)
     {
-        userList = new ArrayList<>();
-
-        String[] columns = {UserSchema._userId, UserSchema._userName, UserSchema._userPassword, UserSchema._userQuestion, UserSchema._questionAnswer, UserSchema._roomId};
-        Cursor cursor = sqLiteDatabase.query(UserSchema._tableName, columns, null, null, null, null, null);
-
-        return getAllUserList(cursor);
+        id = cursor.getInt(cursor.getColumnIndex(UserSchema._userId));
+        username = cursor.getString(cursor.getColumnIndex(UserSchema._userName));
+        user_pwd = cursor.getString(cursor.getColumnIndex(UserSchema._userPassword));
+        question = cursor.getString(cursor.getColumnIndex(UserSchema._userQuestion));
+        answer = cursor.getString(cursor.getColumnIndex(UserSchema._questionAnswer));
+        rid = cursor.getInt(cursor.getColumnIndex(UserSchema._roomId));
     }
 
     private ArrayList<User> getAllUserList(Cursor cursor)
@@ -45,18 +49,35 @@ public class UserDataBaseDriver
         {
             cursor.moveToFirst();
             do {
-                int id = cursor.getInt(cursor.getColumnIndex(UserSchema._userId));
-                String username = cursor.getString(cursor.getColumnIndex(UserSchema._userName));
-                String user_pwd = cursor.getString(cursor.getColumnIndex(UserSchema._userPassword));
-                String question = cursor.getString(cursor.getColumnIndex(UserSchema._userQuestion));
-                String answer = cursor.getString(cursor.getColumnIndex(UserSchema._questionAnswer));
-                int rid = cursor.getInt(cursor.getColumnIndex(UserSchema._roomId));
-                User user = new User(id, username, user_pwd, question, answer, rid );
-                userList.add(user);
-
+                extractUserValues(cursor);
+                addUserValues();
             }while (cursor.moveToNext());
         }
         return userList;
+    }
+
+    public ArrayList<User> getUserFromSpecifRoom(int roomId)
+    {
+        String selection = UserSchema._roomId + " = ?" ;
+        String[] selectionArgs = {String.valueOf(roomId)};
+        @SuppressLint("Recycle") Cursor cursor = sqLiteDatabase.query(UserSchema._tableName, columns, selection, selectionArgs, null, null, null);
+
+        if(cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                extractUserValues(cursor);
+                addUserValues();
+            } while (cursor.moveToNext());
+        }
+        return userList;
+    }
+
+    public ArrayList<User> getUserList()
+    {
+        userList = new ArrayList<>();
+        Cursor cursor = sqLiteDatabase.query(UserSchema._tableName, columns, null, null, null, null, null);
+
+        return getAllUserList(cursor);
     }
 
     public void insertNewUser(User user)
@@ -78,41 +99,10 @@ public class UserDataBaseDriver
         return contentValues;
     }
 
-    public String getSinlgeEntry(int roomId)
+    public UserDataBaseDriver(Context context)
     {
-        Cursor cursor=sqLiteDatabase.query(UserSchema._tableName, null, " room_id=?", new String[]{String.valueOf(roomId)}, null, null, null);
-        if(cursor.getCount()<1) // UserName Not Exist
-        {
-            cursor.close();
-            return "NOT EXIST";
-        }
-        cursor.moveToFirst();
-        String password= cursor.getString(cursor.getColumnIndex(UserSchema._userPassword));
-        cursor.close();
-        return password;
+        BookSqlHelper userSqlHelper = new BookSqlHelper(context);
+        sqLiteDatabase = userSqlHelper.getWritableDatabase();
     }
 
-    public ArrayList<User> getUserFromSpecifRoom(int roomId)
-    {
-        String selection = UserSchema._roomId + " = ?" ;
-        String[] selectionArgs = {String.valueOf(roomId)};
-        String[] columns = {UserSchema._userId, UserSchema._userName, UserSchema._userPassword, UserSchema._userQuestion, UserSchema._questionAnswer, UserSchema._roomId};
-        Cursor cursor = sqLiteDatabase.query(UserSchema._tableName, columns, selection, selectionArgs, null, null, null);
-
-        if(cursor != null && cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                int id = cursor.getInt(cursor.getColumnIndex(UserSchema._userId));
-                String username = cursor.getString(cursor.getColumnIndex(UserSchema._userName));
-                String user_pwd = cursor.getString(cursor.getColumnIndex(UserSchema._userPassword));
-                String question = cursor.getString(cursor.getColumnIndex(UserSchema._userQuestion));
-                String answer = cursor.getString(cursor.getColumnIndex(UserSchema._questionAnswer));
-                int rid = cursor.getInt(cursor.getColumnIndex(UserSchema._roomId));
-                User user = new User(id, username, user_pwd, question, answer, rid);
-                userList.add(user);
-
-            } while (cursor.moveToNext());
-        }
-        return userList;
-    }
 }

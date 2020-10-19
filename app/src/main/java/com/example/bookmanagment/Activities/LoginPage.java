@@ -1,4 +1,4 @@
-package com.example.bookmanagment;
+package com.example.bookmanagment.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,28 +11,27 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bookmanagment.Driver.UserDataBaseDriver;
 import com.example.bookmanagment.Expert.UserExpert;
-import com.example.bookmanagment.Modal.Book;
 import com.example.bookmanagment.Modal.User;
+import com.example.bookmanagment.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static com.example.bookmanagment.MainActivity.ROOM_ID;
-import static com.example.bookmanagment.MainActivity.ROOM_NAME;
+import static com.example.bookmanagment.Activities.MainActivity.ROOM_ID;
+import static com.example.bookmanagment.Activities.MainActivity.ROOM_NAME;
 
 public class LoginPage extends AppCompatActivity
 {
     private TextInputEditText username;
     private TextInputEditText password;
-    UserExpert userExpert;
-    UserDataBaseDriver userDataBaseDriver;
+    private UserExpert userExpert;
+    private UserDataBaseDriver userDataBaseDriver;
     public static final String TAG = "myTag";
     public static final String USER_NAME = "userName";
-    String roomName;
-    String usernameValue ;
-    String userPasswordValue;
-    int roomId;
+    private String roomName;
+    private String usernameValue ;
+    private int roomId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,7 +72,7 @@ public class LoginPage extends AppCompatActivity
     {
          getIntentdata();
          usernameValue = Objects.requireNonNull(username.getText()).toString();
-         userPasswordValue = Objects.requireNonNull(password.getText()).toString();
+         String userPasswordValue = Objects.requireNonNull(password.getText()).toString();
         //code to check if the entered username and password are matching the correct credentials or not
         Log.d(TAG, "onClickLogin: got " + usernameValue + roomId);
 
@@ -85,7 +84,6 @@ public class LoginPage extends AppCompatActivity
                 return;
             }
             Toast.makeText(this, "Password incorrect", Toast.LENGTH_SHORT).show();
-
     }
 
     private void startActivityAfterLogin()

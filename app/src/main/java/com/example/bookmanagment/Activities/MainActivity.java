@@ -1,4 +1,4 @@
-package com.example.bookmanagment;
+package com.example.bookmanagment.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,7 +13,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -24,6 +23,7 @@ import com.example.bookmanagment.Adapter.RoomAdapter;
 import com.example.bookmanagment.Driver.RoomDatabaseDriver;
 import com.example.bookmanagment.Expert.RoomExpert;
 import com.example.bookmanagment.Modal.Room;
+import com.example.bookmanagment.R;
 import com.google.android.material.navigation.NavigationView;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
@@ -36,17 +36,15 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
     public static final String ROOM_NAME = "roomName";
     public static final String ROOM_ID = "roomID";
     public static final int OPEN_CAMERA_CODE = 1234;
-    RoomDatabaseDriver roomDatabaseDriver;
-    RoomAdapter roomAdapter;
-    RoomExpert roomExpert;
-    RecyclerView roomsViewRecycler;
-    Toolbar toolbar;
-    DrawerLayout drawerLayout;
-    CarouselView carouselView;
-    SwipeRefreshLayout swipeRefreshLayout;
+    private RoomDatabaseDriver roomDatabaseDriver;
+    private RoomAdapter roomAdapter;
+    private CarouselView carouselView;
+    private RoomExpert roomExpert;
+    private Toolbar toolbar;
+    private ImageListener imageListener;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
-    int[] sampleImages = {R.drawable.shelf_messy, R.drawable.organised_shelf, R.drawable.shelf3, R.drawable.online_reading};
-    String[] texts = {"From this", "To this", "We make your life easier", "Stay nerdy stay foolish"};
+    private int[] sampleImages = {R.drawable.shelf_messy, R.drawable.organised_shelf, R.drawable.shelf3, R.drawable.online_reading};
 
 
     @Override
@@ -55,13 +53,17 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, OPEN_CAMERA_CODE);
-        roomDatabaseDriver = new RoomDatabaseDriver(this);
-        roomExpert = new RoomExpert(roomDatabaseDriver);
-        roomAdapter = new RoomAdapter(this, roomExpert,this);
+        setValues();
+        setUpImageLisertener();
         bindViews();
         setUpToolbar();
         setUpNavigationDrawerIcon();
         setUpListeners();
+        onReferesh();
+    }
+
+    private void onReferesh()
+    {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -71,26 +73,41 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
         });
     }
 
-    ImageListener imageListener = new ImageListener()
+    private void setUpImageLisertener()
     {
-        @Override
-        public void setImageForPosition(int position, ImageView imageView) {
-            imageView.setImageResource(sampleImages[position]);
-        }
-    };
+        imageListener = new ImageListener()
+        {
+            @Override
+            public void setImageForPosition(int position, ImageView imageView) {
+                imageView.setImageResource(sampleImages[position]);
+            }
+        };
+    }
 
+    private void setValues()
+    {
+        roomDatabaseDriver = new RoomDatabaseDriver(this);
+        roomExpert = new RoomExpert(roomDatabaseDriver);
+        roomAdapter = new RoomAdapter(this, roomExpert,this);
+    }
 
     private void bindViews()
     {
-        roomsViewRecycler = findViewById(R.id.shelves_recyclerView);
+        RecyclerView roomsViewRecycler = findViewById(R.id.shelves_recyclerView);
         roomsViewRecycler.setLayoutManager(new LinearLayoutManager(this));
         roomsViewRecycler.setAdapter(roomAdapter);
         carouselView = findViewById(R.id.carouselView);
-        carouselView.setPageCount(sampleImages.length);
-        carouselView.setImageListener(imageListener);
         swipeRefreshLayout = findViewById(R.id.swipeRefereshLayout);
+        setCarouselViews();
         printDetails();
     }
+
+    private void setCarouselViews()
+    {
+        carouselView.setPageCount(sampleImages.length);
+        carouselView.setImageListener(imageListener);
+    }
+
     private void setUpListeners()
     {
         NavigationView navigationView = findViewById(R.id.navigation_view);
@@ -101,9 +118,11 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
                     case R.id.item1:
                         Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
                         startActivity(searchIntent);
-                        return true;
+                        return false;
                     case R.id.item3:
-
+                        Intent instructionIntent = new Intent(MainActivity.this, InstructionsActivity.class);
+                        startActivity(instructionIntent);
+                        return true;
                 }
                 return false;
             }
@@ -112,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
 
     private void setUpNavigationDrawerIcon()
     {
-        drawerLayout = findViewById(R.id.drawer_layout);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.closed);
         drawerLayout.addDrawerListener(toggle);
         toggle.setDrawerIndicatorEnabled(true);
@@ -129,27 +148,27 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
     public void printDetails()
     {
         ArrayList<Room> Rooms = roomDatabaseDriver.getAllRoomList();
-        
-        System.out.println("Your database has " + Rooms.size() + " rooms ");
+
+        Log.d(TAG, "printDetails: Your database has " + Rooms.size() + " rooms ");
         for (int i = 0; i < Rooms.size(); i++)
         {
-            System.out.println(Rooms.get(i).getId()  + " " + Rooms.get(i).getRoomName());
+            Log.d(TAG,Rooms.get(i).getId()  + " " + Rooms.get(i).getRoomName());
         }
     }
 
     public void OnclickAddExtraRoom(View view)
     {
-        Intent addRoomIntent = new Intent(this,AddExtraRoomActivity.class);
+        Intent addRoomIntent = new Intent(this, AddExtraRoomActivity.class);
         startActivityForResult(addRoomIntent, 1);
         roomAdapter.notifyDataSetChanged();
-        roomAdapter.notifyAll();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-            if (resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK)
+            {
                 assert data != null;
                 String roomName = data.getStringExtra("roomName");
                 Room room = new Room();
@@ -158,9 +177,7 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
                 int roomId = roomExpert.getSpecifcId(roomName);
                 Log.d(TAG, "onActivityResult: roomId is " + roomId);
                 roomAdapter.notifyDataSetChanged();
-                Intent intent1 = new Intent(this, SignUpPage.class);
-                intent1.putExtra("roomId", roomId);
-                startActivity(intent1);
+                startSignUpActivity(roomId);
             }
             printDetails();
         }
@@ -170,17 +187,35 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
     public void onRoomClick(int position)
     {
         if(position != 0) {
-            Log.d(TAG, "onRoomClick: " + roomExpert.getRoomName(position));
-            Intent intent = new Intent(this, LoginPage.class);
-            intent.putExtra(ROOM_NAME, roomExpert.getRoomName(position));
-            intent.putExtra(ROOM_ID, roomExpert.getRoomID(position));
-            startActivity(intent);
+            Log.d(TAG, "onRoomClick: " + roomExpert.getRoomName(position) + " Login to open this room ");
+            startLoginActivity(position);
         }
         else {
-            Intent intent = new Intent(this, ShelfBookActivity.class);
-            intent.putExtra(ROOM_NAME,roomExpert.getRoomName(position));
-            intent.putExtra(ROOM_ID,roomExpert.getRoomID(position));
-            startActivity(intent);
+            Log.d(TAG, "onRoomClick: opened Living room Activity without login ");
+            startLivingRoomActivity(position);
         }
+    }
+
+    private void startLoginActivity(int position)
+    {
+        Intent intent = new Intent(this, LoginPage.class);
+        intent.putExtra(ROOM_NAME, roomExpert.getRoomName(position));
+        intent.putExtra(ROOM_ID, roomExpert.getRoomID(position));
+        startActivity(intent);
+    }
+
+    private void startLivingRoomActivity(int position)
+    {
+        Intent intent = new Intent(this, ShelfBookActivity.class);
+        intent.putExtra(ROOM_NAME,roomExpert.getRoomName(position));
+        intent.putExtra(ROOM_ID,roomExpert.getRoomID(position));
+        startActivity(intent);
+    }
+
+    private void startSignUpActivity(int roomId)
+    {
+        Intent intent1 = new Intent(this, SignUpPage.class);
+        intent1.putExtra("roomId", roomId);
+        startActivity(intent1);
     }
 }

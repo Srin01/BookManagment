@@ -1,7 +1,5 @@
 package com.example.bookmanagment.Expert;
 
-import android.graphics.Bitmap;
-
 import com.example.bookmanagment.Driver.BookDatabaseDriver;
 import com.example.bookmanagment.Modal.Book;
 
@@ -9,8 +7,8 @@ import java.util.ArrayList;
 
 public class BookExpertForSearch
 {
-    BookDatabaseDriver bookDatabaseDriver;
-    ArrayList<Book> bookList ;
+    private BookDatabaseDriver bookDatabaseDriver;
+    private ArrayList<Book> bookList ;
 
     public BookExpertForSearch(BookDatabaseDriver bookdatabaseDriver)
     {

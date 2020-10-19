@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bookmanagment.Expert.BookExpert3;
 import com.example.bookmanagment.R;
 
-import static com.example.bookmanagment.MainActivity.TAG;
+import static com.example.bookmanagment.Activities.MainActivity.TAG;
 
 public class BookAdapter3 extends RecyclerView.Adapter<BookAdapter3.MyBookViewHolder>
 {

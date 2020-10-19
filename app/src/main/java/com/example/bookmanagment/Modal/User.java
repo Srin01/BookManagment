@@ -9,16 +9,6 @@ public class User
     private String answer;
     private int roomId;
 
-    public User(String userName, String userPassword)
-    {
-        this.userName = userName;
-        this.userPassword = userPassword;
-    }
-
-    public int getId() {
-        return id;
-    }
-
     public User(int id, String userName, String userPassword, String question, String answer, int roomId)
     {
         this.userName = userName;
@@ -37,10 +27,6 @@ public class User
         this.answer = answer;
     }
 
-    public User()
-    {
-    }
-
     public int getRoomId() { return roomId; }
 
     public String getUserName() {
@@ -57,5 +43,9 @@ public class User
 
     public String getAnswer() {
         return answer;
+    }
+
+    public int getId() {
+        return id;
     }
 }

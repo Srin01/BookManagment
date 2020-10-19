@@ -12,18 +12,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AboutUsActivity"></activity>
-        <activity android:name=".AddExtraRoomActivity" />
-        <activity android:name=".AddExtraBookActivity" />
-        <activity android:name=".ShelfBookActivity" />
+        <activity android:name=".Activities.AboutUsActivity"/>
+        <activity android:name=".Activities.InstructionsActivity"/>
+        <activity android:name=".Activities.AddExtraRoomActivity" />
+        <activity android:name=".Activities.AddExtraBookActivity" />
+        <activity android:name=".Activities.ShelfBookActivity" />
         <activity
-            android:name=".SearchActivity"
+            android:name=".Activities.SearchActivity"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".BookViewerActivity" />
-        <activity android:name=".PDFActivity" />
-        <activity android:name=".LoginPage" />
-        <activity android:name=".SignUpPage" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.BookViewerActivity" />
+        <activity android:name=".Activities.PDFActivity" />
+        <activity android:name=".Activities.LoginPage" />
+        <activity android:name=".Activities.SignUpPage" />
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

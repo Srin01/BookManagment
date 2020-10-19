@@ -1,4 +1,4 @@
-package com.example.bookmanagment;
+package com.example.bookmanagment.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,25 +14,25 @@ import com.example.bookmanagment.Driver.BookDatabaseDriver;
 import com.example.bookmanagment.Expert.BookExpert2;
 import com.example.bookmanagment.Expert.BookExpert3;
 import com.example.bookmanagment.Expert.BookExpertForRoomAndRow;
+import com.example.bookmanagment.R;
 
-import static com.example.bookmanagment.ShelfBookActivity.BOOK_ID;
-import static com.example.bookmanagment.ShelfBookActivity.BOOK_POS;
-import static com.example.bookmanagment.ShelfBookActivity.BOOK_ROOM_ID;
+import static com.example.bookmanagment.Activities.ShelfBookActivity.BOOK_ID;
+import static com.example.bookmanagment.Activities.ShelfBookActivity.BOOK_POS;
+import static com.example.bookmanagment.Activities.ShelfBookActivity.BOOK_ROOM_ID;
 
 public class BookViewerActivity extends AppCompatActivity
 {
     public static final String ROW_ID = "row_Id";
-    TextView bookName;
-    TextView bookAuthor;
-    TextView bookLocation;
-    ImageView imageView;
-    BookExpertForRoomAndRow bookExpertForRoomAndRow;
-    BookExpert2 bookExpert2;
-    BookExpert3 bookExpert3;
+    private TextView bookName;
+    private TextView bookAuthor;
+    private TextView bookLocation;
+    private ImageView imageView;
+    private BookExpertForRoomAndRow bookExpertForRoomAndRow;
+    private BookExpert2 bookExpert2;
+    private BookExpert3 bookExpert3;
     int room_id;
     int position;
     public final static String TAG = "myTag";
-    BookDatabaseDriver bookDatabaseDriver;
     private int id;
     private int row_Id;
 
@@ -50,9 +50,9 @@ public class BookViewerActivity extends AppCompatActivity
         bookAuthor = findViewById(R.id.textView_authorName);
         bookLocation = findViewById(R.id.textView_Location);
         imageView = findViewById(R.id.imageViewSpecial);
-        bookDatabaseDriver = new BookDatabaseDriver(this);
+        BookDatabaseDriver bookDatabaseDriver = new BookDatabaseDriver(this);
         getDataFromShelfIntent();
-        bookExpertForRoomAndRow = new BookExpertForRoomAndRow(room_id,bookDatabaseDriver);
+        bookExpertForRoomAndRow = new BookExpertForRoomAndRow(room_id, bookDatabaseDriver);
         bookExpert2 = new BookExpert2(room_id, bookDatabaseDriver);
         bookExpert3 = new BookExpert3(room_id, bookDatabaseDriver);
     }

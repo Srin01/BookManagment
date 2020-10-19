@@ -8,12 +8,12 @@ import com.example.bookmanagment.Modal.Book;
 
 import java.util.ArrayList;
 
-import static com.example.bookmanagment.MainActivity.TAG;
+import static com.example.bookmanagment.Activities.MainActivity.TAG;
 
 public class BookExpert2
 {
-    BookDatabaseDriver bookDatabaseDriver;
-    ArrayList<Book> bookList ;
+    private BookDatabaseDriver bookDatabaseDriver;
+    private ArrayList<Book> bookList ;
     int roomId;
 
     public BookExpert2(int roomID, BookDatabaseDriver bookdatabaseDriver)

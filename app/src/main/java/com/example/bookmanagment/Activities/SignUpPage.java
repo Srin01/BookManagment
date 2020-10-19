@@ -1,4 +1,4 @@
-package com.example.bookmanagment;
+package com.example.bookmanagment.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.bookmanagment.Driver.UserDataBaseDriver;
 import com.example.bookmanagment.Expert.UserExpert;
 import com.example.bookmanagment.Modal.User;
+import com.example.bookmanagment.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -25,8 +26,7 @@ public class SignUpPage extends AppCompatActivity
     private TextInputEditText confirmedPassword;
     private TextInputEditText securityAnswer;
     private Spinner securityQuestion;
-    UserExpert userExpert;
-    UserDataBaseDriver userDataBaseDriver;
+    private UserExpert userExpert;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -50,7 +50,7 @@ public class SignUpPage extends AppCompatActivity
         confirmedPassword = findViewById(R.id.textInputConfirmPassword);
         securityAnswer = findViewById(R.id.textInputSecurityAnswer);
         securityQuestion = findViewById(R.id.security_question);
-        userDataBaseDriver = new UserDataBaseDriver(this);
+        UserDataBaseDriver userDataBaseDriver = new UserDataBaseDriver(this);
         userExpert = new UserExpert(userDataBaseDriver);
     }
 
@@ -141,11 +141,11 @@ public class SignUpPage extends AppCompatActivity
         if( password.matches("(?=.*[~!@#$%^&*()_-]).*") )
             iPasswordScore += 2;
 
-        if(iPasswordScore > 0 && iPasswordScore < 4)
+        if(iPasswordScore < 4)
         {
             return "Password is weak";
         }
-        else if(iPasswordScore >= 4 && iPasswordScore < 8)
+        else if(iPasswordScore < 8)
         {
             return "Password Strength is medium";
         }
@@ -155,7 +155,7 @@ public class SignUpPage extends AppCompatActivity
 
     public void onClickSignUp(View view)
     {
-        if(isNull(username.getText().toString()) || isNull(setPassword.getText().toString()) || isNull(confirmedPassword.getText().toString()) || isNull(securityAnswer.getText().toString()))
+        if(isNull((username.getText()).toString()) || isNull((setPassword.getText()).toString()) || isNull(confirmedPassword.getText().toString()) || isNull(securityAnswer.getText().toString()))
         {
             Toast.makeText(this, "Please enter all the fields.", Toast.LENGTH_SHORT).show();
             return;
@@ -182,11 +182,6 @@ public class SignUpPage extends AppCompatActivity
 
     private boolean isNull(String s)
     {
-        if(s.equals(""))
-        {
-            return true;
-        }
-        else
-            return false;
+        return s.equals("");
     }
 }

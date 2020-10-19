@@ -1,27 +1,17 @@
-package com.example.bookmanagment;
+package com.example.bookmanagment.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.bookmanagment.Adapter.RoomAdapter;
-import com.example.bookmanagment.Driver.RoomDatabaseDriver;
-import com.example.bookmanagment.Expert.RoomExpert;
-import com.example.bookmanagment.Modal.Room;
+import com.example.bookmanagment.R;
 
 public class AddExtraRoomActivity extends AppCompatActivity
 {
-    TextView roomName;
-    Button submitButton;
+    private TextView roomName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +23,18 @@ public class AddExtraRoomActivity extends AppCompatActivity
     private void bindViews()
     {
         roomName = findViewById(R.id.textinputRoomName);
-        submitButton = findViewById(R.id.submitButton);
     }
 
     public void onClickAddExtraRoom(View view)
     {
         String roomNameValue = roomName.getText().toString();
-        Intent intent = getIntent();
+        addIntentValues(getIntent(), roomNameValue);
+        finish();
+    }
+
+    private void addIntentValues(Intent intent, String roomNameValue)
+    {
         intent.putExtra("roomName", roomNameValue);
         setResult(RESULT_OK, intent);
-        finish();
     }
 }

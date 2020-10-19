@@ -1,6 +1,5 @@
 package com.example.bookmanagment.Modal;
 
-import android.graphics.Bitmap;
 
 public class Room
 {
