@@ -62,6 +62,7 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
         bindViews();
         setUpToolbar();
         setUpNavigationDrawerIcon();
+        setUpListeners();
 
         Log.d(TAG, "onCreate: ShelfBookActivity Started");
         printDetails();
@@ -213,7 +214,7 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
 
     private void setUpListeners()
     {
-        NavigationView navigationView = findViewById(R.id.navigation_view);
+        NavigationView navigationView = findViewById(R.id.room_navigationView);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
