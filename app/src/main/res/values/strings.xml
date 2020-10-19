@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Book Managment</string>
+    <string name="app_name">Shelf Yourself</string>
     <string name="room_number">Room Number</string>
     <string name="number_of_shelves">Number Of Shelves</string>
     <string name="summary">Summary</string>

@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
     private void bindViews()
     {
         roomsViewRecycler = findViewById(R.id.shelves_recyclerView);
-        roomsViewRecycler.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        roomsViewRecycler.setLayoutManager(new LinearLayoutManager(this));
         roomsViewRecycler.setAdapter(roomAdapter);
         carouselView = findViewById(R.id.carouselView);
         carouselView.setPageCount(sampleImages.length);

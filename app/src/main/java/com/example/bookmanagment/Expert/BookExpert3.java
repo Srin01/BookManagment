@@ -12,73 +12,61 @@ import static com.example.bookmanagment.MainActivity.TAG;
 
 public class BookExpert3 {
     BookDatabaseDriver bookDatabaseDriver;
-    ArrayList<Book> bookList ;
+    ArrayList<Book> bookList;
     int roomId;
 
-    public BookExpert3(int roomID,  BookDatabaseDriver bookdatabaseDriver)
-    {
+    public BookExpert3(int roomID, BookDatabaseDriver bookdatabaseDriver) {
         this.bookDatabaseDriver = bookdatabaseDriver;
         this.roomId = roomID;
-        bookList = bookdatabaseDriver.getBooksOfSpecificRoomAndRow(roomID, 3);
+        bookList = bookdatabaseDriver.getBooksOfSpecificRoomAndRow(roomID, 1);
         Log.d(TAG, "BooksForRoomExpert: bookslist of special room number obtained");
     }
 
-    public int getBookId(int bookPosition)
-    {
+    public int getBookId(int bookPosition) {
         return bookList.get(bookPosition).getId();
     }
 
-    public int getBookRoomId(int bookPosition)
-    {
+    public int getBookRoomId(int bookPosition) {
         return bookList.get(bookPosition).getRoomID();
     }
 
-    public int getRowNumber(int bookPosition)
-    {
+    public int getRowNumber(int bookPosition) {
         return bookList.get(bookPosition).getRowNumber();
     }
 
-    public int getBookPosition(int bookPosition)
-    {
+    public int getBookPosition(int bookPosition) {
         return bookList.get(bookPosition).getBookPositionInRow();
     }
 
-    public String getSummary(int bookPosition)
-    {
+    public String getAuthor(int bookPosition) {
         return bookList.get(bookPosition).getBookAuthor();
     }
 
-    public int getTotalBooks()
-    {
+    public int getTotalBooks() {
 
         return bookDatabaseDriver.getBooksOfSpecificRoomAndRow(roomId, 3).size();
     }
 
-    public void addNewBook(Book book)
-    {
+    public void addNewBook(Book book) {
         bookDatabaseDriver.insertNewBook(book);
         bookList.add(book);
-        Log.d(TAG, "addNewBook: Book " + book.getBookName() +"Added to db");
+        Log.d(TAG, "addNewBook: Book " + book.getBookName() + "Added to db");
     }
 
-    public String getBookName(int position)
-    {
+    public String getBookName(int position) {
         return bookList.get(position).getBookName();
     }
-    public Book getBookOfSpecificId(int id)
-    {
-        for (int i = 0; i < bookList.size(); i++)
-        {
-            if(bookList.get(i).getId() == id)
-            {
+
+    public Book getBookOfSpecificId(int id) {
+        for (int i = 0; i < bookList.size(); i++) {
+            if (bookList.get(i).getId() == id) {
                 return bookList.get(i);
             }
         }
         return null;
     }
-    public Bitmap getBitmapImage(int position)
-    {
+
+    public Bitmap getBitmapImage(int position) {
         return bookList.get(position).getBitmapImage();
     }
 }
-
