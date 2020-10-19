@@ -17,7 +17,7 @@
         <ImageView
             android:id="@+id/room_image1"
             android:layout_width="match_parent"
-            android:src="@drawable/living_room"
+            android:src="@drawable/custom_room"
             android:layout_height="200dp"
             android:layout_margin="10dp"
 
@@ -25,7 +25,7 @@
 
         <TextView
             android:id="@+id/room_name1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             android:layout_marginEnd="265dp"

@@ -1,5 +1,6 @@
 package com.example.bookmanagment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -18,7 +19,12 @@ import com.example.bookmanagment.Modal.Book;
 
 import java.util.ArrayList;
 
-public class SearchActivity extends AppCompatActivity
+import static com.example.bookmanagment.BookViewerActivity.ROW_ID;
+import static com.example.bookmanagment.ShelfBookActivity.BOOK_ID;
+import static com.example.bookmanagment.ShelfBookActivity.BOOK_POS;
+import static com.example.bookmanagment.ShelfBookActivity.BOOK_ROOM_ID;
+
+public class SearchActivity extends AppCompatActivity implements SearchAdapter.OnBookSearchListerner
 {
     SearchView searchView;
     ListView listView;
@@ -68,5 +74,17 @@ public class SearchActivity extends AppCompatActivity
         bookDatabaseDriver = new BookDatabaseDriver(this);
         bookExpertForSearch = new BookExpertForSearch(bookDatabaseDriver);
         books = bookExpertForSearch.getAllBooks();
+    }
+
+    @Override
+    public void onBookClick(int position) {
+        Log.d(MainActivity.TAG, "onBookClick: clicked on Book " + bookExpertForSearch.getBookName(position));
+        Intent intent = new Intent(this, BookViewerActivity.class);
+        intent.putExtra(BOOK_ID, bookExpertForSearch.getBookId(position));
+        intent.putExtra(BOOK_ROOM_ID, bookExpertForSearch.getBookRoomId(position));
+        intent.putExtra(BOOK_POS, position);
+        intent.putExtra(ROW_ID, bookExpertForSearch.getRowNumber(position));
+        Log.d(MainActivity.TAG, "onBookClick: position " + position + " passed");
+        startActivity(intent);
     }
 }

@@ -9,6 +9,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
 import android.content.Intent;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
     Toolbar toolbar;
     DrawerLayout drawerLayout;
     CarouselView carouselView;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     int[] sampleImages = {R.drawable.shelf_messy, R.drawable.organised_shelf, R.drawable.shelf3, R.drawable.online_reading};
     String[] texts = {"From this", "To this", "We make your life easier", "Stay nerdy stay foolish"};
@@ -60,6 +62,13 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
         setUpToolbar();
         setUpNavigationDrawerIcon();
         setUpListeners();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                roomAdapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     ImageListener imageListener = new ImageListener()
@@ -79,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
         carouselView = findViewById(R.id.carouselView);
         carouselView.setPageCount(sampleImages.length);
         carouselView.setImageListener(imageListener);
+        swipeRefreshLayout = findViewById(R.id.swipeRefereshLayout);
         printDetails();
     }
     private void setUpListeners()
@@ -114,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
     }
 
 
-
     public void printDetails()
     {
         ArrayList<Room> Rooms = roomDatabaseDriver.getAllRoomList();
@@ -131,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
         Intent addRoomIntent = new Intent(this,AddExtraRoomActivity.class);
         startActivityForResult(addRoomIntent, 1);
         roomAdapter.notifyDataSetChanged();
+        roomAdapter.notifyAll();
     }
 
     @Override

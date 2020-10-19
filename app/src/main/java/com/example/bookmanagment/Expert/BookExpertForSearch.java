@@ -58,4 +58,9 @@ public class BookExpertForSearch
         bookDatabaseDriver.insertNewBook(book);
         bookList.add(book);
     }
+
+    public String getBookName(int position)
+    {
+        return bookList.get(position).getBookName();
+    }
 }
