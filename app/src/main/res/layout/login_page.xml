@@ -14,6 +14,19 @@
         android:background="@color/colorPrimary"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/righteous"
+
+        android:text="Log-In"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+
+        android:layout_marginTop="10dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_userName"
@@ -63,8 +76,9 @@
         app:layout_constraintStart_toStartOf="@+id/textInputLayout_password"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout_password"
         app:layout_constraintVertical_bias="0.1"
-        android:background="@color/colorAccent"
+        android:background="@drawable/custom_button_3"
         android:onClick="onClickLogin"
+        android:layout_marginTop="60dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
