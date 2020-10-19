@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddExtraBookActivity"
-    android:background="@color/colorBackground">
+    android:background="#a5ecd7">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/colorPrimary"
+        android:background="#0278ae"
         />
 
 
@@ -60,34 +60,54 @@
         android:id="@+id/submitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="submit"
+        android:fontFamily="sans-serif-condensed-medium"
+
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/textInputLayout_RowNumber"
         app:layout_constraintStart_toStartOf="@id/textInputLayout_RowNumber"
         app:layout_constraintTop_toBottomOf="@id/textInputLayout_RowNumber"
         app:layout_constraintVertical_bias="0.1"
-        android:background="@color/colorAccent"
+        android:background="@drawable/custom_button_2"
         android:onClick="onClickAddExtraBook"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="The photo of the\n book cover which \nyou click will be\n placed here"
+        android:textAlignment="center"
+        android:fontFamily="sans-serif-light"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/submitButton"
+        app:layout_constraintStart_toStartOf="@+id/submitButton"
+        app:layout_constraintTop_toBottomOf="@+id/submitButton"
+
+        app:layout_constraintVertical_bias="0.3"/>
+
+    <ImageView
+        android:id="@+id/imageSampleView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="@+id/submitButton"
+        app:layout_constraintStart_toStartOf="@+id/submitButton"
+        app:layout_constraintTop_toBottomOf="@+id/submitButton" />
 
     <Button
         android:id="@+id/cameraButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Take Photo"
+        android:background="@drawable/custom_button_2"
+
         android:textSize="12sp"
         android:layout_marginTop="30dp"
-        app:layout_constraintEnd_toEndOf="@+id/submitButton"
-        app:layout_constraintStart_toStartOf="@+id/submitButton"
-        app:layout_constraintTop_toBottomOf="@+id/submitButton"
+        app:layout_constraintEnd_toEndOf="@id/imageSampleView"
+        app:layout_constraintStart_toStartOf="@id/imageSampleView"
+        app:layout_constraintTop_toBottomOf="@id/imageSampleView"
         android:onClick="onClickOpenCameraIntent"/>
-
-    <ImageView
-        android:id="@+id/imageSampleView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintEnd_toEndOf="@+id/cameraButton"
-        app:layout_constraintStart_toStartOf="@+id/cameraButton"
-        app:layout_constraintTop_toBottomOf="@+id/cameraButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -80,7 +80,6 @@ public class UserExpert
     }
     public boolean validatePassword(String usernameGiven, String passwordGiven, int roomId)
     {
-        User user = getUserOfSpecificName(usernameGiven);
         User user2 = getUserOfSpecificRoom(roomId);
         if(user2 != null) {
         String password = user2.getUserPassword();
@@ -95,11 +94,12 @@ public class UserExpert
     }
 
     private User getUserOfSpecificRoom(int roomId)
-    {for (int i = 0; i < userList.size(); i++)
     {
-        if(userList.get(i).getRoomId() == roomId)
+        for (int i = 0; i < userList.size(); i++)
         {
-            return userList.get(i);
+            if(userList.get(i).getRoomId() == roomId)
+            {
+                return userList.get(i);
         }
     }
         return null;

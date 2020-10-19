@@ -44,10 +44,10 @@ public class BookExpert2
         return bookList.get(bookPosition).getBookPositionInRow();
     }
 
-    public String getSummary(int bookPosition)
-    {
-        return bookList.get(bookPosition).getSummary();
-    }
+//    public String getSummary(int bookPosition)
+//    {
+//        return bookList.get(bookPosition).getSummary();
+//    }
 
     public int getTotalBooks()
     {

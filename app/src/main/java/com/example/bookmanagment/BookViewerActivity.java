@@ -46,9 +46,8 @@ public class BookViewerActivity extends AppCompatActivity
 
     private void bindViews() {
         bookName = findViewById(R.id.textView_bookName);
-        bookAuthor = findViewById(R.id.textView_bookAuthor);
+        bookAuthor = findViewById(R.id.textView_authorName);
         bookLocation = findViewById(R.id.textView_Location);
-        bookAuthor = findViewById(R.id.textView_bookSummary);
         imageView = findViewById(R.id.imageViewSpecial);
         bookDatabaseDriver = new BookDatabaseDriver(this);
         getDataFromShelfIntent();
