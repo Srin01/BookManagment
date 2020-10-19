@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
         roomExpert = new RoomExpert(roomDatabaseDriver);
         roomAdapter = new RoomAdapter(this, roomExpert,this);
         bindViews();
-        setUpNavigationDrawerIcon();
         setUpToolbar();
+        setUpNavigationDrawerIcon();
         setUpListeners();
     }
 

@@ -1,7 +1,11 @@
 package com.example.bookmanagment;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,6 +13,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,6 +25,7 @@ import com.example.bookmanagment.Expert.BookExpert2;
 import com.example.bookmanagment.Expert.BookExpert3;
 import com.example.bookmanagment.Expert.BookExpertForRoomAndRow;
 import com.example.bookmanagment.Modal.Book;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
@@ -41,6 +47,8 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
     BookExpert2 bookExpertForRoomAndRow2;
     BookExpert3 bookExpertForRoomAndRow3;
     Bitmap bitmap;
+    Toolbar toolbar;
+    DrawerLayout drawerLayout;
     String TAG = "myTag";
     int roomId;
     String roomName;
@@ -52,6 +60,9 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelf_book);
         bindViews();
+        setUpToolbar();
+        setUpNavigationDrawerIcon();
+
         Log.d(TAG, "onCreate: ShelfBookActivity Started");
         printDetails();
     }
@@ -183,5 +194,42 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
         intent.putExtra(ROW_ID, bookExpertForRoomAndRow3.getRowNumber(position));
         Log.d(TAG, "onBookClick: position " + position + " passed");
         startActivity(intent);
+    }
+
+    private void setUpNavigationDrawerIcon()
+    {
+        drawerLayout = findViewById(R.id.room_drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.closed);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.setDrawerIndicatorEnabled(true);
+        toggle.syncState();
+    }
+
+    private void setUpToolbar()
+    {
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
+    private void setUpListeners()
+    {
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.item_search:
+                        Intent searchIntent = new Intent(ShelfBookActivity.this, SearchActivity.class);
+                        searchIntent.putExtra("roomId", roomId);
+                        startActivity(searchIntent);
+                        return true;
+                    case R.id.item_home:
+                        Intent mainIntent = new Intent(ShelfBookActivity.this, MainActivity.class);
+                        startActivity(mainIntent);
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 }
