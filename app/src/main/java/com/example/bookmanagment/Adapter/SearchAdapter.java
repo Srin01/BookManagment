@@ -20,11 +20,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 {
     private Context context;
     private ArrayList<Book> books;
+    private OnBookSearchListerner onBookSearchListerner;
 
-    public SearchAdapter(Context context, ArrayList<Book> books)
+    public SearchAdapter(Context context, ArrayList<Book> books, OnBookSearchListerner onBookSearchListerner)
     {
         this.context = context;
         this.books = books;
+        this.onBookSearchListerner = onBookSearchListerner;
     }
 
     @NonNull
@@ -32,7 +34,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.search_list_item, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view, onBookSearchListerner);
         return viewHolder;
     }
 
@@ -55,13 +57,28 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         return null;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+
     {
         View view;
-        public ViewHolder(@NonNull View itemView)
+        OnBookSearchListerner onBookListerner;
+        public ViewHolder(@NonNull View itemView, OnBookSearchListerner onBookSearchListerner)
         {
             super(itemView);
             this.view = itemView;
+            this.onBookListerner = onBookSearchListerner;
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            onBookListerner.onBookClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnBookSearchListerner
+    {
+        void onBookClick(int position);
     }
 }

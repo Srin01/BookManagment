@@ -49,6 +49,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         final TextView roomName = view.findViewById(R.id.room_name1);
         ImageView roomImage = view.findViewById(R.id.room_image1);
         roomName.setText(roomExpert.getRoomName(position));
+        if(position == 0 )
+        {
+            roomImage.setImageResource(R.drawable.living_room);
+        }
     }
 
     @Override
