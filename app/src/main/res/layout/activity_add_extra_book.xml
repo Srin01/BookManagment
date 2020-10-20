@@ -25,6 +25,7 @@
         android:fontFamily="@font/righteous"
         android:text="Add a new book"
         android:textSize="50dp"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
@@ -100,8 +101,8 @@
 
     <ImageView
         android:id="@+id/imageSampleView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="@+id/submitButton"
         app:layout_constraintStart_toStartOf="@+id/submitButton"

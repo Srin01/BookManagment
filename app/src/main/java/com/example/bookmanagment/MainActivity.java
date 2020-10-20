@@ -92,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
                         Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
                         startActivity(searchIntent);
                         return true;
+                    case R.id.item3:
+
                 }
                 return false;
             }

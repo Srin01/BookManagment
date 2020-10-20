@@ -140,9 +140,10 @@
         app:layout_constraintStart_toStartOf="@+id/textInputLayout_security_answer"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout_security_answer"
 
+        android:background="@drawable/custom_button_3"
         app:layout_constraintVertical_bias="0.4"
         android:onClick="onClickSignUp"
-        android:background="@drawable/custom_button_3"
+
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
