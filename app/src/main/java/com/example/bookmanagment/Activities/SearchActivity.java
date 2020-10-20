@@ -23,7 +23,7 @@ import static com.example.bookmanagment.Activities.ShelfBookActivity.BOOK_ID;
 import static com.example.bookmanagment.Activities.ShelfBookActivity.BOOK_POS;
 import static com.example.bookmanagment.Activities.ShelfBookActivity.BOOK_ROOM_ID;
 
-public class SearchActivity extends AppCompatActivity implements SearchAdapter.OnBookSearchListerner
+public class SearchActivity extends AppCompatActivity implements SearchAdapter.OnBookSearchListener
 {
     private SearchView searchView;
     private ListView listView;

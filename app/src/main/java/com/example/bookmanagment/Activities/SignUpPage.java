@@ -3,6 +3,7 @@ package com.example.bookmanagment.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -58,7 +59,7 @@ public class SignUpPage extends AppCompatActivity
     {
         username.addTextChangedListener(new TextWatcher() {
 
-            TextInputLayout usernameLayout = findViewById(R.id.textInputLayout_Username);
+            TextInputLayout userLayout = findViewById(R.id.textInputLayout_Username);
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
             {
@@ -68,10 +69,10 @@ public class SignUpPage extends AppCompatActivity
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
             {
-                if(charSequence.toString().equals(""))
+                if(charSequence.toString().equals("") )
                 {
-                    usernameLayout.setError("Please enter a username.");
-                    usernameLayout.setErrorEnabled(true);
+                    Toast.makeText(SignUpPage.this, "Please enter a valid userName", Toast.LENGTH_SHORT).show();
+                    userLayout.setErrorEnabled(true);
                 }
             }
 

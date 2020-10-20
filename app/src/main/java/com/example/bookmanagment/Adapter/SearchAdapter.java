@@ -20,13 +20,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 {
     private Context context;
     private ArrayList<Book> books;
-    private OnBookSearchListerner onBookSearchListerner;
+    private OnBookSearchListener onBookSearchListener;
 
-    public SearchAdapter(Context context, ArrayList<Book> books, OnBookSearchListerner onBookSearchListerner)
+    public SearchAdapter(Context context, ArrayList<Book> books, OnBookSearchListener onBookSearchListener)
     {
         this.context = context;
         this.books = books;
-        this.onBookSearchListerner = onBookSearchListerner;
+        this.onBookSearchListener = onBookSearchListener;
     }
 
     @NonNull
@@ -34,7 +34,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.search_list_item, parent, false);
-        return new ViewHolder(view, onBookSearchListerner);
+        return new ViewHolder(view, onBookSearchListener);
     }
 
     @Override
@@ -42,7 +42,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     {
         View view = holder.view;
         TextView bookName = view.findViewById(R.id.book_name);
-
         bookName.setText(books.get(position).getBookName());
     }
 
@@ -57,26 +56,24 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
-
     {
         View view;
-        OnBookSearchListerner onBookListerner;
-        public ViewHolder(@NonNull View itemView, OnBookSearchListerner onBookSearchListerner)
+        OnBookSearchListener onBookListener;
+        public ViewHolder(@NonNull View itemView, OnBookSearchListener onBookSearchListener)
         {
             super(itemView);
             this.view = itemView;
-            this.onBookListerner = onBookSearchListerner;
-
+            this.onBookListener = onBookSearchListener;
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            onBookListerner.onBookClick(getAdapterPosition());
+            onBookListener.onBookClick(getAdapterPosition());
         }
     }
 
-    public interface OnBookSearchListerner
+    public interface OnBookSearchListener
     {
         void onBookClick(int position);
     }

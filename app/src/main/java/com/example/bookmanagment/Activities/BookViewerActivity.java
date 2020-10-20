@@ -2,6 +2,7 @@ package com.example.bookmanagment.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +25,6 @@ public class BookViewerActivity extends AppCompatActivity
 {
     public static final String ROW_ID = "row_Id";
     private TextView bookName;
-    private TextView bookAuthor;
     private TextView bookLocation;
     private ImageView imageView;
     private BookExpertForRoomAndRow bookExpertForRoomAndRow;
@@ -47,7 +47,6 @@ public class BookViewerActivity extends AppCompatActivity
 
     private void bindViews() {
         bookName = findViewById(R.id.textView_bookName);
-        bookAuthor = findViewById(R.id.textView_authorName);
         bookLocation = findViewById(R.id.textView_Location);
         imageView = findViewById(R.id.imageViewSpecial);
         BookDatabaseDriver bookDatabaseDriver = new BookDatabaseDriver(this);
@@ -67,21 +66,22 @@ public class BookViewerActivity extends AppCompatActivity
         row_Id = getIntent().getIntExtra(ROW_ID, 0);
     }
 
+    @SuppressLint("SetTextI18n")
     private void SetViews()
     {
         try {
             if (row_Id == 1) {
                 bookName.setText(bookExpertForRoomAndRow.getBookOfSpecificId(id).getBookName());
-                bookAuthor.setText(bookExpertForRoomAndRow.getBookOfSpecificId(id).getBookAuthor());
                 imageView.setImageBitmap(bookExpertForRoomAndRow.getBookOfSpecificId(id).getBitmapImage());
+                bookLocation.setText("Location : "+ bookExpertForRoomAndRow.getBookOfSpecificId(id).getRowNumber() + " row " + bookExpertForRoomAndRow.getBookOfSpecificId(id).getBookPositionInRow() + " position");
             } else if (row_Id == 2) {
                 bookName.setText(bookExpert2.getBookOfSpecificId(id).getBookName());
-                bookAuthor.setText(bookExpert2.getBookOfSpecificId(id).getBookAuthor());
                 imageView.setImageBitmap(bookExpert2.getBookOfSpecificId(id).getBitmapImage());
+                bookLocation.setText("Location : "+ bookExpert2.getBookOfSpecificId(id).getRowNumber() + " row " + bookExpert2.getBookOfSpecificId(id).getBookPositionInRow() + " position");
             } else {
                 bookName.setText(bookExpert3.getBookOfSpecificId(id).getBookName());
-                bookAuthor.setText(bookExpert3.getBookOfSpecificId(id).getBookAuthor());
                 imageView.setImageBitmap(bookExpert3.getBookOfSpecificId(id).getBitmapImage());
+                bookLocation.setText("Location : "+ bookExpert3.getBookOfSpecificId(id).getRowNumber() + " row " + bookExpert3.getBookOfSpecificId(id).getBookPositionInRow() + " position");
             }
         }
         catch (Exception e)

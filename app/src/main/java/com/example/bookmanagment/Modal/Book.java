@@ -33,12 +33,13 @@ public class Book
         this.bookAuthor = summary;
     }
 
-    public Book(String bookName, int rowNumber, int roomID, Bitmap bitmap)
+    public Book(String bookName, int rowNumber, int roomID, Bitmap bitmap, int bookPositionInRow)
     {
         this.bookName = bookName;
         this.rowNumber = rowNumber;
         this.roomID = roomID;
         this.bitmap = bitmap;
+        this.bookPositionInRow = bookPositionInRow;
     }
 
     public int getId()

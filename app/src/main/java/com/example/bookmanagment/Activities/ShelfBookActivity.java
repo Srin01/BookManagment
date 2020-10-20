@@ -15,16 +15,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bookmanagment.Adapter.BookAdapter;
 import com.example.bookmanagment.Adapter.BookAdapter2;
 import com.example.bookmanagment.Adapter.BookAdapter3;
 import com.example.bookmanagment.Driver.BookDatabaseDriver;
+import com.example.bookmanagment.Driver.UserDataBaseDriver;
 import com.example.bookmanagment.Expert.BookExpert2;
 import com.example.bookmanagment.Expert.BookExpert3;
 import com.example.bookmanagment.Expert.BookExpertForRoomAndRow;
+import com.example.bookmanagment.Expert.UserExpert;
 import com.example.bookmanagment.Modal.Book;
+import com.example.bookmanagment.Modal.Instruction;
 import com.example.bookmanagment.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -42,12 +46,14 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
     private RecyclerView booksListRecyclerViewrow2;
     private RecyclerView booksListRecyclerViewrow3;
     private BookDatabaseDriver bookDatabaseDriver;
+    private UserDataBaseDriver userDataBaseDriver;
     private BookAdapter bookAdapter1;
     private BookAdapter2 bookAdapter2;
     private BookAdapter3 bookAdapter3;
     private BookExpertForRoomAndRow bookExpertForRoomAndRow1;
     private BookExpert2 bookExpertForRoomAndRow2;
     private BookExpert3 bookExpertForRoomAndRow3;
+    private UserExpert userExpert;
     private Bitmap bitmap;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -56,6 +62,7 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
     private String roomName;
     private String bookNameValue;
     int rowId;
+    private int bookPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -89,6 +96,7 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
         bookExpertForRoomAndRow1 = new BookExpertForRoomAndRow(roomId, bookDatabaseDriver);
         bookExpertForRoomAndRow2 = new BookExpert2(roomId, bookDatabaseDriver);
         bookExpertForRoomAndRow3 = new BookExpert3(roomId, bookDatabaseDriver);
+        userExpert = new UserExpert(userDataBaseDriver);
     }
 
     private void bindViews()
@@ -98,6 +106,7 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
         booksListRecyclerViewrow3 = findViewById(R.id.books_recyclerView_row3);
         setRecyclerView();
         bookDatabaseDriver = new BookDatabaseDriver(this);
+        userDataBaseDriver = new UserDataBaseDriver(this);
         setAdapter();
     }
 
@@ -145,8 +154,9 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
         {
             if(resultCode == RESULT_OK)
             {
+                assert data != null;
                 extractValuesFromIntent(data);
-                Book book = new Book(bookNameValue, rowId, roomId, bitmap);
+                Book book = new Book(bookNameValue, rowId, roomId, bitmap, bookPos);
                 Log.d(TAG, "onActivityResult: new book of room id " + roomId + " is added");
                 try {
                     if (rowId == 1) {
@@ -175,6 +185,7 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
         assert data != null;
         bookNameValue = data.getStringExtra("bookName");
         rowId = data.getIntExtra("RowNumber", 1);
+        bookPos = data.getIntExtra("bookPos", 1);
         bitmap = data.getParcelableExtra("bookImage");
     }
 
@@ -232,10 +243,17 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
     private void setUpListeners()
     {
         NavigationView navigationView = findViewById(R.id.room_navigationView);
+        View headerView = navigationView.getHeaderView(0);
+        TextView userName = headerView.findViewById(R.id.textViewUserName);
+        if(roomId != 1)
+            userName.setText(userExpert.getUserOfSpecificRoom(roomId).getUserName());
+        else
+            userName.setText("Living Room");
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
+                switch (menuItem.getItemId())
+                {
                     case R.id.item_search:
                         Intent searchIntent = new Intent(ShelfBookActivity.this, SearchActivity.class);
                         searchIntent.putExtra("roomId", roomId);
@@ -244,6 +262,10 @@ public class ShelfBookActivity extends AppCompatActivity implements BookAdapter.
                     case R.id.item_home:
                         Intent mainIntent = new Intent(ShelfBookActivity.this, MainActivity.class);
                         startActivity(mainIntent);
+                        return true;
+                    case R.id.item_help:
+                        Intent help_intent = new Intent(ShelfBookActivity.this, InstructionsActivity.class);
+                        startActivity(help_intent);
                         return true;
                 }
                 return false;

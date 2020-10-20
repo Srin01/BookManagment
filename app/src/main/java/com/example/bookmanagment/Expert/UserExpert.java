@@ -89,7 +89,7 @@ public class UserExpert
         }
     }
 
-    private User getUserOfSpecificRoom(int roomId)
+    public User getUserOfSpecificRoom(int roomId)
     {
         for (int i = 0; i < userList.size(); i++)
         {

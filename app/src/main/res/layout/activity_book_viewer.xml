@@ -58,26 +58,12 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/textView_authorName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Author's Name"
-        android:fontFamily="serif-monospace"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/book_name"
-        app:layout_constraintStart_toStartOf="@id/book_name"
-        app:layout_constraintTop_toBottomOf="@id/book_name"
-        app:layout_constraintVertical_bias="0.1"
-        />
-
     
     <ImageView
         android:id="@+id/imageViewSpecial"
-        app:layout_constraintEnd_toEndOf="@+id/textView_authorName"
-        app:layout_constraintStart_toStartOf="@+id/textView_authorName"
-        app:layout_constraintTop_toBottomOf="@+id/textView_authorName"
+        app:layout_constraintEnd_toEndOf="@id/book_name"
+        app:layout_constraintStart_toStartOf="@id/book_name"
+        app:layout_constraintTop_toBottomOf="@id/book_name"
         android:layout_marginTop="30dp"
         android:layout_height="300dp"
         android:layout_width="match_parent" />
@@ -99,17 +85,18 @@
 
     <TextView
         android:id="@+id/textView_Location"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Location"
         android:textSize="18sp"
+        android:textAlignment="center"
         android:fontFamily="sans-serif-condensed-medium"
 
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/read_button"
-        app:layout_constraintStart_toStartOf="@id/read_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/read_button"
-        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintVertical_bias="0.2"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

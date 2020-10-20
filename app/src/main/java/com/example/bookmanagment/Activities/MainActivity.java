@@ -13,11 +13,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.bookmanagment.Adapter.RoomAdapter;
 import com.example.bookmanagment.Driver.RoomDatabaseDriver;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
     private RoomDatabaseDriver roomDatabaseDriver;
     private RoomAdapter roomAdapter;
     private CarouselView carouselView;
+    private SharedPreferences prefs = null;
     private RoomExpert roomExpert;
     private Toolbar toolbar;
     private ImageListener imageListener;
@@ -54,15 +57,26 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, OPEN_CAMERA_CODE);
         setValues();
-        setUpImageLisertener();
+        setUpImageListener();
         bindViews();
         setUpToolbar();
         setUpNavigationDrawerIcon();
         setUpListeners();
-        onReferesh();
+        onRefresh();
+        prefs = getSharedPreferences("com.BookManagement.ShelfYourself", MODE_PRIVATE);
     }
 
-    private void onReferesh()
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (prefs.getBoolean("firstRun", true)) {
+            Toast.makeText(this, "Welcome New User please read the Instructions in the help category of drawer", Toast.LENGTH_SHORT).show();
+            prefs.edit().putBoolean("firstRun", false).apply();
+        }
+    }
+
+    private void onRefresh()
     {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -73,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
         });
     }
 
-    private void setUpImageLisertener()
+    private void setUpImageListener()
     {
         imageListener = new ImageListener()
         {
@@ -118,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements RoomAdapter.OnRoo
                     case R.id.item1:
                         Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
                         startActivity(searchIntent);
-                        return false;
+                        return true;
                     case R.id.item3:
                         Intent instructionIntent = new Intent(MainActivity.this, InstructionsActivity.class);
                         startActivity(instructionIntent);

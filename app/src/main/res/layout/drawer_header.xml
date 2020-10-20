@@ -10,7 +10,7 @@
         android:id="@+id/circleImageView"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/house"
+        android:src="@mipmap/ic_launcher"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintCircleRadius="5dp"
@@ -21,7 +21,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home, Sweet Home"
+        android:text="Shelf Yourself"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="#000000"
